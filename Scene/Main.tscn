@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://de23i5ccgo6cx"]
+
+[ext_resource type="Script" uid="uid://b3esov37st7pe" path="res://Scripts/GameBoard.cs" id="1_g6ejq"]
+[ext_resource type="Texture2D" uid="uid://dm85hssvo532l" path="res://Assets/board_medival.png" id="1_h175a"]
+[ext_resource type="PackedScene" uid="uid://cfpftsmnmepos" path="res://Scene/HUD.tscn" id="2_g6ejq"]
+[ext_resource type="Texture2D" uid="uid://ca5tq340m1tjl" path="res://Assets/cell_highlight.png" id="4_h175a"]
+
+[node name="Main" type="Node2D" unique_id=1893344277]
+position = Vector2(-1, -1)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2113159763]
+position = Vector2(577, 324)
+texture = ExtResource("1_h175a")
+
+[node name="GameBoard" type="Control" parent="." unique_id=955591652]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 1157.0
+offset_bottom = 655.0
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_g6ejq")
+
+[node name="CellHighlight" type="Sprite2D" parent="GameBoard" unique_id=2014137027]
+texture = ExtResource("4_h175a")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1594767933]
+
+[node name="HUD" parent="UI" unique_id=504301085 instance=ExtResource("2_g6ejq")]
+offset_left = 146.0
+offset_top = -4.0
+offset_right = -10.0
+offset_bottom = 1.0

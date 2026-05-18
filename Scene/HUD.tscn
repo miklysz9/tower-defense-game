@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cfpftsmnmepos"]
+
+[ext_resource type="Script" uid="uid://ute22n6hgksn" path="res://Scripts/HUD.cs" id="1_0apqc"]
+
+[node name="HUD" type="Control" unique_id=504301085]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_0apqc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1455779854]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.192
+offset_right = -1152.0
+offset_bottom = -124.416
+
+[node name="PeashooterButton" type="Button" parent="HBoxContainer" unique_id=1067554382]
+layout_mode = 2
+text = "Peashooter (100)
+"
+
+[node name="SunLabel" type="Label" parent="." unique_id=730313530]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

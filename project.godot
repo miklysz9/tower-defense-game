@@ -1,0 +1,36 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="tower-defense-game"
+run/main_scene="uid://de23i5ccgo6cx"
+config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*uid://dfy4nsooueimj"
+GridManager="*uid://bc23s48c1xbhd"
+SunManager="*uid://xygkai5q27ma"
+
+[dotnet]
+
+project/assembly_name="tower-defense-game"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

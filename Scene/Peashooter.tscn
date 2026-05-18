@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://wsqpart46sww"]
+
+[ext_resource type="Script" uid="uid://b7mfhsy37kpyl" path="res://Scripts/Peashooter.cs" id="1_gemx4"]
+[ext_resource type="Texture2D" uid="uid://cmdsms840ujhw" path="res://Assets/Peashooter.png" id="2_8owci"]
+[ext_resource type="PackedScene" uid="uid://b5dhknlhhjgnu" path="res://Scene/Projectile.tscn" id="2_f4fop"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_617d4"]
+size = Vector2(62, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oueww"]
+size = Vector2(1155, 64)
+
+[node name="Peashooter" type="StaticBody2D" unique_id=508145824]
+collision_mask = 2
+script = ExtResource("1_gemx4")
+ProjectileScene = ExtResource("2_f4fop")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=280937004]
+texture = ExtResource("2_8owci")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1777058369]
+light_mask = 2
+position = Vector2(4, -1)
+shape = SubResource("RectangleShape2D_617d4")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=69308408]
+light_mask = 2
+position = Vector2(825, 6)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1976157395]
+light_mask = 2
+position = Vector2(-247, -6)
+shape = SubResource("RectangleShape2D_oueww")
