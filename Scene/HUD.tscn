@@ -17,15 +17,20 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.192
-offset_right = -1152.0
-offset_bottom = -124.416
+offset_left = 153.0
+offset_right = -624.0
+offset_bottom = -93.416
 
 [node name="PeashooterButton" type="Button" parent="HBoxContainer" unique_id=1067554382]
 layout_mode = 2
 text = "Peashooter (100)
 "
 
+[node name="SunflowerButton" type="Button" parent="HBoxContainer" unique_id=1120624437]
+layout_mode = 2
+text = "Sunflower (50)"
+
 [node name="SunLabel" type="Label" parent="." unique_id=730313530]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 54.0
+offset_bottom = 30.0

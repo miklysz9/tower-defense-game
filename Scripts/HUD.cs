@@ -3,32 +3,42 @@ using System;
 
 public partial class HUD : Control
 {
-	// Scena Peashootera, którą załadujemy i przekażemy do GameBoard
+	// Sceny roślin, które ładujemy i przekazujemy do GameBoard
 	private PackedScene _peashooterScene;
+	private PackedScene _sunflowerScene; // DODANE: Scena Słonecznika
 
 	// Referencje do węzłów UI
 	private Label _sunLabel;
 	private Button _peashooterButton;
+	private Button _sunflowerButton;    // DODANE: Przycisk Słonecznika
 
 	public override void _Ready()
 	{
-		// 1. Ładowanie sceny Peashootera z plików projektu
-		_peashooterScene = GD.Load<PackedScene>("res://Scene/Peashooter.tscn"); // Upewnij się, że ścieżka jest poprawna!
+		// 1. Ładowanie scen z plików projektu
+		_peashooterScene = GD.Load<PackedScene>("res://Scene/Peashooter.tscn");
+		
+		// DODANE: Ładowanie sceny słonecznika. 
+		// Upewnij się, że ścieżka i nazwa pliku dokładnie odpowiadają Twojemu projektowi!
+		_sunflowerScene  = GD.Load<PackedScene>("res://Scene/Sunflower.tscn"); 
 
 		// 2. Pobranie referencji do węzłów
-		_sunLabel = GetNode<Label>("SunLabel");
+		_sunLabel         = GetNode<Label>("SunLabel");
 		_peashooterButton = GetNode<Button>("HBoxContainer/PeashooterButton");
+		
+		// DODANE: Pobieramy Twój nowy przycisk z drzewa sceny.
+		// Jeśli SunflowerButton nie jest w HBoxContainer, popraw ścieżkę (np. "SunflowerButton")
+		_sunflowerButton  = GetNode<Button>("HBoxContainer/SunflowerButton");
 
 		// 3. Podłączenie się pod sygnał zmiany ilości słońca w SunManager
 		if (SunManager.Instance != null)
 		{
 			SunManager.Instance.SunChanged += OnSunChanged;
-			// Ustawiamy początkową wartość słońca na starcie
 			OnSunChanged(SunManager.Instance.Sun);
 		}
 
-		// 4. Podłączenie kliknięcia przycisku przez kod (zamiast edytora)
+		// 4. Podłączenie kliknięć przycisków przez kod
 		_peashooterButton.Pressed += OnPeashooterButtonPressed;
+		_sunflowerButton.Pressed  += OnSunflowerButtonPressed; // DODANE: Reakcja na kliknięcie słonecznika
 	}
 
 	// Wywołuje się automatycznie, gdy SunManager zmieni stan słońca
@@ -49,17 +59,28 @@ public partial class HUD : Control
 			return;
 		}
 
-		// Pobieramy instancję GameBoard i wywołujemy Twoją metodę wyboru rośliny
+		// Przekazujemy Peashootera i jego koszt (100) do wyboru na planszy
 		var gameBoard = GetTree().CurrentScene.GetNodeOrNull<GameBoard>("GameBoard");
-		
 		if (gameBoard != null)
 		{
-			// Przekazujemy scenę i koszt (100) do Twojego skryptu GameBoard.cs
 			gameBoard.SelectPlant(_peashooterScene, 100);
 		}
-		else
+	}
+
+	// DODANE: Wywołuje się po kliknięciu przycisku Słonecznika
+	private void OnSunflowerButtonPressed()
+	{
+		if (_sunflowerScene == null)
 		{
-			GD.PrintErr("[HUD] Nie znaleziono węzła GameBoard na scenie głównej!");
+			GD.PrintErr("[HUD] Nie znaleziono sceny Słonecznika!");
+			return;
+		}
+
+		// Przekazujemy Słonecznik i jego koszt (50) do wyboru na planszy
+		var gameBoard = GetTree().CurrentScene.GetNodeOrNull<GameBoard>("GameBoard");
+		if (gameBoard != null)
+		{
+			gameBoard.SelectPlant(_sunflowerScene, 50);
 		}
 	}
 }

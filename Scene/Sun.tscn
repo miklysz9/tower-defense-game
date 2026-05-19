@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://6bxmndj5hne1"]
+
+[ext_resource type="Script" uid="uid://dhmge28a1ki3e" path="res://Scripts/Sun.cs" id="1_q3kit"]
+[ext_resource type="Texture2D" uid="uid://4byw53h8kh0d" path="res://Assets/sun.png" id="2_gwmom"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h1lqq"]
+
+[node name="Sun" type="Area2D" unique_id=1499262976]
+collision_mask = 0
+script = ExtResource("1_q3kit")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1333412887]
+texture = ExtResource("2_gwmom")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1712330590]
+shape = SubResource("CircleShape2D_h1lqq")
