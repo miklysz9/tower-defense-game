@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://66m8dhp1l550"]
+
+[ext_resource type="Script" uid="uid://dfy4nsooueimj" path="res://GameManager.cs" id="1_script"]
+[ext_resource type="Resource" uid="uid://bnacskld5sxcn" path="res://Levels/Level_1.tres" id="2_udwf8"]
+[ext_resource type="PackedScene" uid="uid://bw1akp5i7k8qx" path="res://Scene/zombie_base.tscn" id="2_v52v0"]
+[ext_resource type="Resource" uid="uid://cw2xnyan22guj" path="res://Levels/Level_2.tres" id="3_dobux"]
+
+[node name="GameManager" type="Node" unique_id=1964321918]
+script = ExtResource("1_script")
+BasicZombieScene = ExtResource("2_v52v0")
+LevelsList = Array[Object]([ExtResource("2_udwf8"), ExtResource("3_dobux")])

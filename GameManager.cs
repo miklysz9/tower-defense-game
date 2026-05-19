@@ -19,15 +19,22 @@ public partial class GameManager : Node
 		private set { _state = value; EmitSignal(SignalName.GameStateChanged, (int)value); }
 	}
 
-	// ── Konfiguracja fal ─────────────────────────────────────────────────
+	// ── Konfiguracja fal i poziomów ──────────────────────────────────────
 	[Export] public PackedScene BasicZombieScene;
-	[Export] public float WaveInterval     = 20f;   // sekundy między falami
-	[Export] public int   ZombiesPerWave   = 5;
-	[Export] public int   TotalWaves       = 5;
+	
+	// Lista wszystkich poziomów w grze (wepchniesz tu pliki .tres w edytorze)
+	[Export] public Array<LevelData> LevelsList;
+
+	private int _currentLevelIndex = 0; // 0 = Poziom 1, 1 = Poziom 2 itd.
+	private LevelData _currentLevelData;
 
 	private int   _currentWave    = 0;
 	private int   _aliveZombies   = 0;
 	private Timer _waveTimer;
+
+	// Te zmienne były powodem błędów CS0103 – teraz są polami klasy nadpisywanymi przez poziomy!
+	public float WaveInterval { get; private set; } = 20f;
+	public int   TotalWaves { get; private set; } = 5;
 
 	// ── Sygnały ─────────────────────────────────────────────────────────
 	[Signal] public delegate void GameStateChangedEventHandler(int state);
@@ -37,20 +44,22 @@ public partial class GameManager : Node
 
 	// ── Cykl życia ───────────────────────────────────────────────────────
 	public override void _Ready()
-{
-	Instance = this;
+	{
+		Instance = this;
 
-	// ŁADUJEMY SCENĘ ZOMBIE BEZPOŚREDNIO Z PLIKÓW PROJEKTU:
-	// Upewnij się, że ścieżka i nazwa pliku (włącznie z wielkością liter) są poprawne!
-	BasicZombieScene = GD.Load<PackedScene>("res://Scene/zombie_base.tscn");
+		// ŁADUJEMY SCENĘ ZOMBIE BEZPOŚREDNIO Z PLIKÓW PROJEKTU
+		BasicZombieScene = GD.Load<PackedScene>("res://Scene/zombie_base.tscn");
 
-	_waveTimer           = new Timer();
-	_waveTimer.WaitTime  = WaveInterval;
-	_waveTimer.Timeout  += StartNextWave;
-	AddChild(_waveTimer);
+		_waveTimer           = new Timer();
+		// Początkowa konfiguracja timera
+		_waveTimer.WaitTime  = WaveInterval;
+		_waveTimer.Timeout  += StartNextWave;
+		AddChild(_waveTimer);
 
-	StartGame(); 
-}
+		// Najpierw ładujemy pierwszy poziom (indeks 0), aby ustawić poprawne wartości WaveInterval i TotalWaves
+		LoadLevel(0);
+		StartGame(); 
+	}
 
 	// ── Kontrola gry ─────────────────────────────────────────────────────
 
@@ -60,7 +69,7 @@ public partial class GameManager : Node
 		_aliveZombies = 0;
 		State         = GameState.Playing;
 
-		// Krótka pauza przed pierwszą falą (czas na posadzenie roślin)
+		// Krótka pauza przed pierwszą falą (czas na posadzenie pierwszych Słoneczników)
 		GetTree().CreateTimer(5.0).Timeout += StartNextWave;
 		GD.Print("[GameManager] Gra startuje!");
 	}
@@ -95,9 +104,15 @@ public partial class GameManager : Node
 		GD.Print($"[GameManager] ═══ FALA {_currentWave}/{TotalWaves} ═══");
 		EmitSignal(SignalName.WaveStarted, _currentWave);
 
-		// Spawnuj zombie z opóźnieniami
-		int count = ZombiesPerWave + (_currentWave) * 2;  // rośnie z każdą falą
-		for (int i = 0; i < count; i++)
+		// NAPRAWIONE: Wyciąganie poprawnej liczby zombie ze słownika poziomu
+		int zombiesToSpawn = 5; // bezpieczny fallback
+		if (_currentLevelData != null && _currentLevelData.ZombiesPerWave.ContainsKey(_currentWave))
+		{
+			zombiesToSpawn = _currentLevelData.ZombiesPerWave[_currentWave];
+		}
+
+		// Spawnowanie z małym opóźnieniem (delay), żeby zombie nie wchodziły idealnie jeden na drugim
+		for (int i = 0; i < zombiesToSpawn; i++)
 		{
 			float delay = i * 1.5f;
 			GetTree().CreateTimer(delay).Timeout += () => SpawnZombie();
@@ -144,9 +159,15 @@ public partial class GameManager : Node
 		EmitSignal(SignalName.WaveEnded, _currentWave);
 
 		if (_currentWave < TotalWaves)
+		{
+			// Aktualizujemy czas odliczania, ponieważ mógł się zmienić w zależności od poziomu
+			_waveTimer.WaitTime = WaveInterval;
 			_waveTimer.Start();   // odczekaj, potem kolejna fala
+		}
 		else
+		{
 			WinGame();
+		}
 	}
 
 	// ── Koniec gry ───────────────────────────────────────────────────────
@@ -154,8 +175,19 @@ public partial class GameManager : Node
 	private void WinGame()
 	{
 		State = GameState.Won;
-		EmitSignal(SignalName.GameOver, true);
-		GD.Print("[GameManager] ★ WYGRANA! ★");
+		GD.Print("[GameManager] Wygrałeś ten poziom!");
+
+		// Przejdź do kolejnego poziomu
+		if (LevelsList != null && _currentLevelIndex + 1 < LevelsList.Count)
+		{
+			_currentLevelIndex++;
+			LoadLevel(_currentLevelIndex);
+			StartGame(); // Resetuje timery i odpala stan Playing
+		}
+		else
+		{
+			GD.Print("[GameManager] Gratulacje! Ukończyłeś całą grę!");
+		}
 	}
 
 	private void LoseGame()
@@ -163,5 +195,31 @@ public partial class GameManager : Node
 		State = GameState.Lost;
 		EmitSignal(SignalName.GameOver, false);
 		GD.Print("[GameManager] ✗ Przegrana.");
+	}
+	
+	// ── Levele ───────────────────────────────────────────────────────
+	public void LoadLevel(int levelIndex)
+	{
+		if (LevelsList == null || levelIndex >= LevelsList.Count)
+		{
+			GD.PrintErr("[GameManager] Brak konfiguracji dla poziomu o indeksie: " + levelIndex);
+			return;
+		}
+
+		_currentLevelIndex = levelIndex;
+		_currentLevelData = LevelsList[levelIndex];
+
+		// Nadpisujemy parametry gry danymi z poziomu
+		_currentWave = 0;
+		_aliveZombies = 0;
+		TotalWaves = _currentLevelData.TotalWaves; 
+		WaveInterval = _currentLevelData.WaveInterval;
+
+		if (SunManager.Instance != null)
+		{
+			// Opcjonalnie: SunManager.Instance.ResetSun(_currentLevelData.StartingSun);
+		}
+
+		GD.Print($"[GameManager] Załadowano Poziom {_currentLevelData.LevelNumber}!");
 	}
 }

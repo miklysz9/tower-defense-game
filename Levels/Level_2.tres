@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cw2xnyan22guj"]
+
+[ext_resource type="Script" uid="uid://dpwfahtsod0v3" path="res://Scripts/LevelData.cs" id="1_o5bsh"]
+[ext_resource type="PackedScene" uid="uid://wsqpart46sww" path="res://Scene/Peashooter.tscn" id="1_sjdld"]
+[ext_resource type="PackedScene" uid="uid://ygiof8uam4th" path="res://Scene/Sunflower.tscn" id="2_286qh"]
+
+[resource]
+script = ExtResource("1_o5bsh")
+LevelNumber = 2
+TotalWaves = 4
+StartingSun = 200
+ZombiesPerWave = Dictionary[int, int]({
+1: 4,
+2: 6,
+3: 10
+})
+AvailablePlants = Array[PackedScene]([ExtResource("1_sjdld"), ExtResource("2_286qh")])
+metadata/_custom_type_script = "uid://dpwfahtsod0v3"
