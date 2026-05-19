@@ -9,7 +9,7 @@ public partial class GridManager : Node
 	[Export] public int   Rows     = 5;
 	[Export] public int   Cols     = 9;
 	[Export] public int   CellSize = 80;      // px, komórka jest kwadratem
-	[Export] public Vector2 Origin = new Vector2(80, 120);  // lewy-górny róg siatki
+	[Export] public Vector2 Origin = new Vector2(178, 120);  // lewy-górny róg siatki
 
 	// ── Stan siatki ──────────────────────────────────────────────────────
 	private PlantBase[,] _grid;
@@ -27,8 +27,8 @@ public partial class GridManager : Node
 	public Vector2 GridToWorld(int row, int col)
 	{
 		return Origin + new Vector2(
-			col * CellSize + CellSize / 2f,
-			row * CellSize + CellSize / 2f
+			col * (CellSize + 8) + CellSize / 2f,
+			row * (CellSize + 4) + CellSize / 2f
 		);
 	}
 
@@ -36,7 +36,7 @@ public partial class GridManager : Node
 	public bool WorldToGrid(Vector2 worldPos, out int row, out int col)
 	{
 		var local = worldPos - Origin;
-		col = (int)(local.X / CellSize);
+		col = (int)(local.X / (CellSize+7));
 		row = (int)(local.Y / CellSize);
 		return IsInBounds(row, col);
 	}
