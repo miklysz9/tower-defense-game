@@ -21,6 +21,11 @@ GridManager="*uid://bc23s48c1xbhd"
 SunManager="*uid://xygkai5q27ma"
 GameManager="*uid://66m8dhp1l550"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
 [dotnet]
 
 project/assembly_name="tower-defense-game"

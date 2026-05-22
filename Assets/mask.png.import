@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm85hssvo532l"
-path="res://.godot/imported/board_medival.png-9db25dbafaf09efc488a8a0a97018ade.ctex"
+uid="uid://bfic5jf1d7gc5"
+path="res://.godot/imported/mask.png-0c5a436be4eaa2a8acc155423a50b507.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/board_medival.png"
-dest_files=["res://.godot/imported/board_medival.png-9db25dbafaf09efc488a8a0a97018ade.ctex"]
+source_file="res://Assets/mask.png"
+dest_files=["res://.godot/imported/mask.png-0c5a436be4eaa2a8acc155423a50b507.ctex"]
 
 [params]
 
