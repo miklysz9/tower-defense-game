@@ -1,15 +1,21 @@
 [gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://bnacskld5sxcn"]
 
+[ext_resource type="PackedScene" uid="uid://702773g3rqn5" path="res://Scene/enemies/muk.tscn" id="1_a8fee"]
 [ext_resource type="Script" uid="uid://dpwfahtsod0v3" path="res://Scripts/LevelData.cs" id="1_l7tad"]
-[ext_resource type="PackedScene" uid="uid://ygiof8uam4th" path="res://Scene/Sunflower.tscn" id="1_numos"]
-[ext_resource type="PackedScene" uid="uid://wsqpart46sww" path="res://Scene/Peashooter.tscn" id="2_a8fee"]
+[ext_resource type="PackedScene" uid="uid://bw1akp5i7k8qx" path="res://Scene/enemies/zombie_base.tscn" id="1_numos"]
+[ext_resource type="Script" uid="uid://cyo8rskugj0ut" path="res://Scripts/WaveData.cs" id="2_a8fee"]
+
+[sub_resource type="Resource" id="Resource_ksgqo"]
+script = ExtResource("2_a8fee")
+ZombiesToSpawn = Array[PackedScene]([ExtResource("1_a8fee"), ExtResource("1_numos"), ExtResource("1_numos")])
+metadata/_custom_type_script = "uid://cyo8rskugj0ut"
+
+[sub_resource type="Resource" id="Resource_5gvsb"]
+script = ExtResource("2_a8fee")
+ZombiesToSpawn = Array[PackedScene]([ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_numos")])
+metadata/_custom_type_script = "uid://cyo8rskugj0ut"
 
 [resource]
 script = ExtResource("1_l7tad")
-ZombiesPerWave = Dictionary[int, int]({
-1: 3,
-2: 3,
-3: 3
-})
-AvailablePlants = Array[PackedScene]([ExtResource("1_numos"), ExtResource("2_a8fee")])
+Waves = Array[Object]([SubResource("Resource_ksgqo"), SubResource("Resource_5gvsb")])
 metadata/_custom_type_script = "uid://dpwfahtsod0v3"

@@ -1,19 +1,19 @@
 [gd_scene format=3 uid="uid://ygiof8uam4th"]
 
-[ext_resource type="Script" uid="uid://b8es00c5vycna" path="res://Scripts/Sunflower.cs" id="1_vyhnt"]
-[ext_resource type="PackedScene" uid="uid://6bxmndj5hne1" path="res://Scene/Sun.tscn" id="2_bxift"]
-[ext_resource type="Texture2D" uid="uid://dqok45q4p22er" path="res://Assets/sunflower.png" id="3_uhiir"]
+[ext_resource type="Script" uid="uid://b8es00c5vycna" path="res://Scripts/towers/Sunflower.cs" id="1_j1r0u"]
+[ext_resource type="PackedScene" uid="uid://6bxmndj5hne1" path="res://Scene/Sun.tscn" id="2_t0frf"]
+[ext_resource type="Texture2D" uid="uid://dqok45q4p22er" path="res://Assets/sunflower.png" id="3_ycub8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ab2xu"]
 size = Vector2(33, 52)
 
 [node name="Sunflower" type="StaticBody2D" unique_id=1396315873]
 collision_mask = 0
-script = ExtResource("1_vyhnt")
-SunScene = ExtResource("2_bxift")
+script = ExtResource("1_j1r0u")
+SunScene = ExtResource("2_t0frf")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=579499030]
-texture = ExtResource("3_uhiir")
+texture = ExtResource("3_ycub8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1198958868]
 position = Vector2(-0.5, 7)

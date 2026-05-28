@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bw1akp5i7k8qx"]
+
+[ext_resource type="Script" uid="uid://dq4jdbid0r5sm" path="res://Scripts/enemies/ZombieBase.cs" id="1_2gnbl"]
+[ext_resource type="Texture2D" uid="uid://6s7ynts7mlxx" path="res://Assets/ghostbymillie.png" id="2_78jsh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mqdu1"]
+size = Vector2(54, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1rcjl"]
+size = Vector2(55, 64)
+
+[node name="ZombieBase" type="CharacterBody2D" unique_id=980885381]
+position = Vector2(32, 32)
+collision_layer = 2
+script = ExtResource("1_2gnbl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=920490337]
+visibility_layer = 2
+texture = ExtResource("2_78jsh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1055866387]
+visibility_layer = 2
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_mqdu1")
+
+[node name="HitArea" type="Area2D" parent="." unique_id=1618857445]
+visibility_layer = 2
+position = Vector2(-114, 1)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=766157250]
+position = Vector2(104.5, -1)
+shape = SubResource("RectangleShape2D_1rcjl")
