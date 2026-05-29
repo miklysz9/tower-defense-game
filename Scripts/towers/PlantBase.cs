@@ -2,7 +2,7 @@ using Godot;
 
 /// <summary>
 /// Bazowa klasa dla wszystkich roślin. Dziedziczy po Node2D.
-/// Każda roślina (Sunflower, Peashooter itp.) rozszerza tę klasę.
+/// Każda roślina (Sunflower, Knight itp.) rozszerza tę klasę.
 /// </summary>
 public partial class PlantBase : Node2D
 {

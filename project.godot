@@ -30,6 +30,13 @@ window/size/viewport_height=720
 
 project/assembly_name="tower-defense-game"
 
+[file_customization]
+
+folder_colors={
+"res://Assets/UI/": "green",
+"res://Scene/UI/": "green"
+}
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

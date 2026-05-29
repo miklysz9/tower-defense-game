@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cfpftsmnmepos"]
 
 [ext_resource type="Script" uid="uid://ute22n6hgksn" path="res://Scripts/HUD.cs" id="1_0apqc"]
+[ext_resource type="Texture2D" uid="uid://onds2sh70pug" path="res://Assets/UI/Ui_frame.png" id="2_e3kos"]
 
 [node name="HUD" type="Control" unique_id=504301085]
 layout_mode = 3
@@ -12,18 +13,24 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_0apqc")
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1443579316]
+position = Vector2(444, 71)
+texture = ExtResource("2_e3kos")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1455779854]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.192
-offset_left = 153.0
-offset_right = -624.0
-offset_bottom = -93.416
+offset_left = 182.0
+offset_top = 4.0
+offset_right = -574.0
+offset_bottom = -0.2400055
+alignment = 1
 
-[node name="PeashooterButton" type="Button" parent="HBoxContainer" unique_id=1067554382]
+[node name="KnightButton" type="Button" parent="HBoxContainer" unique_id=1067554382]
 layout_mode = 2
-text = "Peashooter (100)
+text = "Knight (100)
 "
 
 [node name="SunflowerButton" type="Button" parent="HBoxContainer" unique_id=1120624437]

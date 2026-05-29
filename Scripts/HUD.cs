@@ -4,20 +4,20 @@ using System;
 public partial class HUD : Control
 {
 	// Sceny roślin, które ładujemy i przekazujemy do GameBoard
-	private PackedScene _peashooterScene;
+	private PackedScene _KnightScene;
 	private PackedScene _sunflowerScene; // DODANE: Scena Słonecznika
 	private PackedScene _obsidianKnightScene;
 
 	// Referencje do węzłów UI
 	private Label _sunLabel;
-	private Button _peashooterButton;
+	private Button _KnightButton;
 	private Button _sunflowerButton;    // DODANE: Przycisk Słonecznika
 	private Button _obsidianKnightButton;
 
 	public override void _Ready()
 	{
 		// 1. Ładowanie scen z plików projektu
-		_peashooterScene = GD.Load<PackedScene>("res://Scene/towers/Peashooter.tscn");
+		_KnightScene = GD.Load<PackedScene>("res://Scene/towers/Knight.tscn");
 		
 		// DODANE: Ładowanie sceny słonecznika. 
 		// Upewnij się, że ścieżka i nazwa pliku dokładnie odpowiadają Twojemu projektowi!
@@ -27,7 +27,7 @@ public partial class HUD : Control
 
 		// 2. Pobranie referencji do węzłów
 		_sunLabel         = GetNode<Label>("SunLabel");
-		_peashooterButton = GetNode<Button>("HBoxContainer/PeashooterButton");
+		_KnightButton = GetNode<Button>("HBoxContainer/KnightButton");
 		
 		// DODANE: Pobieramy Twój nowy przycisk z drzewa sceny.
 		// Jeśli SunflowerButton nie jest w HBoxContainer, popraw ścieżkę (np. "SunflowerButton")
@@ -42,7 +42,7 @@ public partial class HUD : Control
 		}
 
 		// 4. Podłączenie kliknięć przycisków przez kod
-		_peashooterButton.Pressed += OnPeashooterButtonPressed;
+		_KnightButton.Pressed += OnKnightButtonPressed;
 		_sunflowerButton.Pressed  += OnSunflowerButtonPressed; // DODANE: Reakcja na kliknięcie słonecznika
 		_obsidianKnightButton.Pressed  += OnObsidianKnightButtonPressed; // DODANE: Reakcja na kliknięcie słonecznika
 	}
@@ -56,20 +56,20 @@ public partial class HUD : Control
 		}
 	}
 
-	// Wywołuje się po kliknięciu przycisku Peashootera
-	private void OnPeashooterButtonPressed()
+	// Wywołuje się po kliknięciu przycisku Knighta
+	private void OnKnightButtonPressed()
 	{
-		if (_peashooterScene == null)
+		if (_KnightScene == null)
 		{
-			GD.PrintErr("[HUD] Nie znaleziono sceny Peashootera!");
+			GD.PrintErr("[HUD] Nie znaleziono sceny Knighta!");
 			return;
 		}
 
-		// Przekazujemy Peashootera i jego koszt (100) do wyboru na planszy
+		// Przekazujemy Knighta i jego koszt (100) do wyboru na planszy
 		var gameBoard = GetTree().CurrentScene.GetNodeOrNull<GameBoard>("GameBoard");
 		if (gameBoard != null)
 		{
-			gameBoard.SelectPlant(_peashooterScene, 100);
+			gameBoard.SelectPlant(_KnightScene, 100);
 		}
 	}
 
