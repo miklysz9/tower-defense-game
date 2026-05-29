@@ -8,9 +8,8 @@ public partial class Sun : Area2D
 
 	public override void _Ready()
 	{
-		// Podłączamy sygnał kliknięcia myszką na ten obiekt Area2D
-		InputEvent += OnInputEvent;
-
+		// Podłączamy sygnał najechania myszką na ten obiekt Area2D
+		MouseEntered += OnMouseEnter;
 		// Tworzymy automatyczny zegar usuwania słońca (żeby plansza nie zasypała się starymi słońcami)
 		var timer = new Timer();
 		timer.WaitTime = Lifetime;
@@ -20,15 +19,10 @@ public partial class Sun : Area2D
 		timer.Start();
 	}
 
-	private void OnInputEvent(Node viewport, InputEvent @event, long shapeIdx)
+
+	private void OnMouseEnter()
 	{
-		// Sprawdzamy czy gracz kliknął LEWYM przyciskiem myszy
-		if (@event is InputEventMouseButton mouseEvent 
-			&& mouseEvent.Pressed 
-			&& mouseEvent.ButtonIndex == MouseButton.Left)
-		{
-			CollectSun();
-		}
+		CollectSun();
 	}
 
 	private void CollectSun()
