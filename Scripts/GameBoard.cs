@@ -20,7 +20,7 @@ public partial class GameBoard : Control
 			_cellHighlight.Visible = false;
 	}
 
-	public override void _Input(InputEvent @event)
+	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventMouseButton mouseEvent
 			&& mouseEvent.Pressed
@@ -28,8 +28,6 @@ public partial class GameBoard : Control
 		{
 			HandleClick(mouseEvent.GlobalPosition);
 		}
-
-		
 	}
 	// DODAJEMY TĘ METODĘ:
 	public override void _Process(double delta)
@@ -90,6 +88,16 @@ public partial class GameBoard : Control
 
 		// Po posadzeniu odznacz (jeden zakup = jedno zasadzenie)
 		DeselectPlant();
+
+		// Powiadom HUD o posadzeniu — odznacz kartę i zaktualizuj dostępność
+		var hud = GetTree().CurrentScene.GetNodeOrNull<HUD>("%HUD");
+		if (hud == null)
+		{
+			// Szukaj w CanvasLayer/UI
+			var ui = GetTree().CurrentScene.GetNodeOrNull<CanvasLayer>("UI");
+			hud = ui?.GetNodeOrNull<HUD>("HUD");
+		}
+		hud?.OnPlantPlaced();
 	}
 
 	// ── Podświetlenie komórki ────────────────────────────────────────────

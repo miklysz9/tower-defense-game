@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ute22n6hgksn" path="res://Scripts/HUD.cs" id="1_0apqc"]
 [ext_resource type="Texture2D" uid="uid://onds2sh70pug" path="res://Assets/UI/Ui_frame.png" id="2_e3kos"]
+[ext_resource type="PackedScene" path="res://Scene/UI/Knight.tscn" id="3_knight"]
+[ext_resource type="PackedScene" uid="uid://bb6tfe465ju6l" path="res://Scene/UI/Sunflower.tscn" id="4_sunfl"]
+[ext_resource type="PackedScene" uid="uid://ckg5b8xi2ibff" path="res://Scene/UI/ObsidianKnight.tscn" id="5_obskn"]
 
 [node name="HUD" type="Control" unique_id=504301085]
 layout_mode = 3
@@ -27,21 +30,23 @@ offset_top = 4.0
 offset_right = -574.0
 offset_bottom = -0.2400055
 alignment = 1
+theme_override_constants/separation = 10
 
-[node name="KnightButton" type="Button" parent="HBoxContainer" unique_id=1067554382]
+[node name="KnightCard" parent="HBoxContainer" instance=ExtResource("3_knight")]
 layout_mode = 2
-text = "Knight (100)
-"
 
-[node name="SunflowerButton" type="Button" parent="HBoxContainer" unique_id=1120624437]
+[node name="SunflowerCard" parent="HBoxContainer" instance=ExtResource("4_sunfl")]
 layout_mode = 2
-text = "Sunflower (50)"
 
-[node name="ObsidianKnightButton" type="Button" parent="HBoxContainer" unique_id=32886061]
+[node name="ObsidianKnightCard" parent="HBoxContainer" instance=ExtResource("5_obskn")]
 layout_mode = 2
-text = "ObsidianKnight (300)"
 
 [node name="SunLabel" type="Label" parent="." unique_id=730313530]
 layout_mode = 0
-offset_right = 54.0
-offset_bottom = 30.0
+offset_left = 180.0
+offset_top = 95.0
+offset_right = 250.0
+offset_bottom = 125.0
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,42 +1,46 @@
 [gd_scene format=3 uid="uid://ckg5b8xi2ibff"]
 
+[ext_resource type="Script" path="res://Scripts/CharacterCard.cs" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://r2bapvi6kbd6" path="res://Assets/UI/unit_frame.png" id="1_118ss"]
 [ext_resource type="Texture2D" uid="uid://4byw53h8kh0d" path="res://Assets/sun.png" id="2_6wqhx"]
-[ext_resource type="Texture2D" uid="uid://cmdsms840ujhw" path="res://Assets/Knight.png" id="3_bodkj"]
+[ext_resource type="Texture2D" uid="uid://bcdrwh2mdmwnd" path="res://Assets/knight2bymillie.png" id="3_kn2"]
 
-[node name="Knight" type="Control" unique_id=946039161]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ObsidianKnightCard" type="Control"]
+custom_minimum_size = Vector2(80, 130)
+layout_mode = 2
+mouse_filter = 0
+script = ExtResource("1_script")
+TowerScenePath = "res://Scene/towers/knight_2.tscn"
+Cost = 300
+DisplayName = "Obsidian Knight"
 
-[node name="Frame" type="Sprite2D" parent="." unique_id=1792355519]
+[node name="Frame" type="Sprite2D" parent="."]
+position = Vector2(40, 65)
 texture = ExtResource("1_118ss")
 
-[node name="Unit_name" type="Label" parent="." unique_id=1600148327]
+[node name="Unit_name" type="Label" parent="."]
 layout_mode = 0
-offset_left = -40.0
-offset_top = -65.0
-offset_right = 40.0
-offset_bottom = -47.0
-theme_override_font_sizes/font_size = 13
-text = "Knight"
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 80.0
+offset_bottom = 18.0
+theme_override_font_sizes/font_size = 11
+text = "Obsidian Knight"
 horizontal_alignment = 1
 
-[node name="Sun" type="Sprite2D" parent="." unique_id=240926935]
-position = Vector2(-19, 43)
+[node name="Sun" type="Sprite2D" parent="."]
+position = Vector2(21, 108)
 texture = ExtResource("2_6wqhx")
 
-[node name="Label" type="Label" parent="." unique_id=1913457320]
+[node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = -2.0
-offset_top = 32.0
-offset_right = 35.0
-offset_bottom = 55.0
-text = "0000"
+offset_left = 38.0
+offset_top = 97.0
+offset_right = 75.0
+offset_bottom = 120.0
+text = "300"
+horizontal_alignment = 1
 
-[node name="Unit_img" type="Sprite2D" parent="." unique_id=226576683]
-position = Vector2(2, -13)
-texture = ExtResource("3_bodkj")
+[node name="Unit_img" type="Sprite2D" parent="."]
+position = Vector2(42, 52)
+texture = ExtResource("3_kn2")
