@@ -29,17 +29,14 @@ offset_left = 182.0
 offset_top = 4.0
 offset_right = -574.0
 offset_bottom = -0.2400055
-alignment = 1
 theme_override_constants/separation = 10
+alignment = 1
 
-[node name="KnightCard" parent="HBoxContainer" instance=ExtResource("3_knight")]
-layout_mode = 2
+[node name="SunflowerCard" parent="HBoxContainer" unique_id=130341990 instance=ExtResource("4_sunfl")]
 
-[node name="SunflowerCard" parent="HBoxContainer" instance=ExtResource("4_sunfl")]
-layout_mode = 2
+[node name="KnightCard" parent="HBoxContainer" unique_id=763025362 instance=ExtResource("3_knight")]
 
-[node name="ObsidianKnightCard" parent="HBoxContainer" instance=ExtResource("5_obskn")]
-layout_mode = 2
+[node name="ObsidianKnightCard" parent="HBoxContainer" unique_id=160563556 instance=ExtResource("5_obskn")]
 
 [node name="SunLabel" type="Label" parent="." unique_id=730313530]
 layout_mode = 0
