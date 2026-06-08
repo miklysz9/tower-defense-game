@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://daul1wsi1otd2"]
+
+[ext_resource type="Script" uid="uid://cg70wu6imnobj" path="res://Scripts/towers/Glyph.cs" id="1_glyph"]
+[ext_resource type="Texture2D" uid="uid://bjgkwqemm2yt6" path="res://Assets/glyph.png" id="2_txsyc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mefpw"]
+atlas = ExtResource("2_txsyc")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2t47"]
+atlas = ExtResource("2_txsyc")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xyv7"]
+atlas = ExtResource("2_txsyc")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dc3h1"]
+atlas = ExtResource("2_txsyc")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mafdn"]
+atlas = ExtResource("2_txsyc")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nfev"]
+atlas = ExtResource("2_txsyc")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4oja"]
+atlas = ExtResource("2_txsyc")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khiye"]
+atlas = ExtResource("2_txsyc")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wetj2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mefpw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2t47")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xyv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dc3h1")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mafdn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5nfev")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4oja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khiye")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_glyph_body"]
+size = Vector2(60, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_glyph_detect"]
+size = Vector2(80, 80)
+
+[node name="Glyph" type="StaticBody2D" unique_id=801524285]
+collision_mask = 2
+script = ExtResource("1_glyph")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1419685142]
+position = Vector2(9.536743e-07, 9.536743e-07)
+scale = Vector2(0.93750006, 0.93750006)
+sprite_frames = SubResource("SpriteFrames_wetj2")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=108757903]
+shape = SubResource("RectangleShape2D_glyph_body")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=373955965]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=2106065485]
+shape = SubResource("RectangleShape2D_glyph_detect")

@@ -18,6 +18,31 @@ public partial class GameBoard : Control
 		_cellHighlight = GetNodeOrNull<Node2D>("CellHighlight");
 		if (_cellHighlight != null)
 			_cellHighlight.Visible = false;
+
+		SpawnGlyphs();
+	}
+
+	private void SpawnGlyphs()
+	{
+		var glyphScene = GD.Load<PackedScene>("res://Scene/towers/Glyph.tscn");
+		if (glyphScene == null)
+		{
+			GD.PrintErr("[GameBoard] Nie można załadować sceny Glyph.tscn!");
+			return;
+		}
+
+		for (int r = 0; r < GridManager.Instance.Rows; r++)
+		{
+			var glyph = glyphScene.Instantiate<PlantBase>();
+			AddChild(glyph);
+
+			// Ustaw pozycję po lewej stronie siatki
+			Vector2 firstCellWorldPos = GridManager.Instance.GridToWorld(r, 0);
+			float glyphX = GridManager.Instance.Origin.X - GridManager.Instance.CellSize / 2f - 20f;
+			glyph.GlobalPosition = new Vector2(glyphX, firstCellWorldPos.Y);
+			
+			glyph.SetGridPosition(r, -1);
+		}
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
