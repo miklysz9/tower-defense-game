@@ -81,6 +81,7 @@ public partial class Knight : PlantBase
 		if (!_zombieInRow)
 		{
 			_shootTimer.Stop();
+			_animatedSprite.Play("idle");
 		}
 	}
 	// ── Strzelanie ───────────────────────────────────────────────────────

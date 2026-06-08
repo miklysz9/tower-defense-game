@@ -1,7 +1,76 @@
 [gd_scene format=3 uid="uid://bw1akp5i7k8qx"]
 
 [ext_resource type="Script" uid="uid://dq4jdbid0r5sm" path="res://Scripts/enemies/ZombieBase.cs" id="1_2gnbl"]
-[ext_resource type="Texture2D" uid="uid://6s7ynts7mlxx" path="res://Assets/ghostbymillie.png" id="2_78jsh"]
+[ext_resource type="Texture2D" uid="uid://ci5bii26t0hql" path="res://Assets/ghostbymillie-sheet.png" id="2_2gnbl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gnbl"]
+atlas = ExtResource("2_2gnbl")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvh5k"]
+atlas = ExtResource("2_2gnbl")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x75dl"]
+atlas = ExtResource("2_2gnbl")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfbip"]
+atlas = ExtResource("2_2gnbl")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78jsh"]
+atlas = ExtResource("2_2gnbl")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sr85g"]
+atlas = ExtResource("2_2gnbl")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77ocl"]
+atlas = ExtResource("2_2gnbl")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bswyl"]
+atlas = ExtResource("2_2gnbl")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tvh5k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gnbl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvh5k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x75dl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfbip")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_78jsh")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_sr85g")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_77ocl")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_bswyl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mqdu1"]
 size = Vector2(54, 52)
@@ -14,9 +83,12 @@ position = Vector2(32, 32)
 collision_layer = 2
 script = ExtResource("1_2gnbl")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=920490337]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=605659600]
 visibility_layer = 2
-texture = ExtResource("2_78jsh")
+sprite_frames = SubResource("SpriteFrames_tvh5k")
+animation = &"death"
+autoplay = "default"
+frame_progress = 0.45304465
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1055866387]
 visibility_layer = 2
