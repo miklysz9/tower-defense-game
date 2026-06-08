@@ -3,6 +3,7 @@ using System;
 
 public partial class Sunflower : PlantBase
 {
+	private AnimatedSprite2D _animatedSprite;
 	[Export] public float SunInterval = 10.0f; // Co ile sekund rodzi się słońce
 	[Export] public int SunAmount = 25;       // Ile warte jest słońce z tej rośliny
 
@@ -13,6 +14,8 @@ public partial class Sunflower : PlantBase
 
 	protected override void OnReady()
 	{
+		_animatedSprite = GetNode<AnimatedSprite2D>("Sprite2D");
+		_animatedSprite.Play("idle");
 		PlantName = "Sunflower";
 		MaxHealth = 100;
 		Cost = 50;
@@ -25,10 +28,14 @@ public partial class Sunflower : PlantBase
 		AddChild(_sunTimer);
 	}
 
-	private void SpawnSun()
+	private async void SpawnSun()
 	{
 		if (!_isAlive || SunScene == null) return;
 
+		_animatedSprite.Play("summon");
+		
+		await ToSignal(_animatedSprite, "animation_finished");
+		
 		// Tworzymy obiekt słońca w pamięci
 		var sunInstance = SunScene.Instantiate<Sun>();
 		
@@ -43,5 +50,7 @@ public partial class Sunflower : PlantBase
 		// Dodajemy słońce do głównej sceny gry (do rodzica, żeby nie zginęło, gdy zombie zje słonecznik)
 		GetParent().AddChild(sunInstance);
 		GD.Print("[Sunflower] Wygenerowano słońce!");
+		
+		_animatedSprite.Play("idle");
 	}
 }
