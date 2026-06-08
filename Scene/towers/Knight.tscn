@@ -108,7 +108,6 @@ ProjectileScene = ExtResource("2_dy6ut")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1146229929]
 sprite_frames = SubResource("SpriteFrames_b3iwh")
 animation = &"attack"
-frame_progress = 0.30956239
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1777058369]
 light_mask = 2

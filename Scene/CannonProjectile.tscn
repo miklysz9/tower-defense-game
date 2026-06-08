@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://d0122tmhfdpj7"]
+
+[ext_resource type="Script" uid="uid://cpxkvdhp1ojr7" path="res://Scripts/CannonProjectile.cs" id="1_56gi6"]
+[ext_resource type="Texture2D" uid="uid://0wb8hjwrsj4q" path="res://Assets/fireballbymillie-sheet.png" id="2_56gi6"]
+[ext_resource type="Texture2D" uid="uid://bkbxyc8nfq658" path="res://Assets/fireball_explosion-sheet.png" id="3_hsbgv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsbgv"]
+atlas = ExtResource("2_56gi6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjb11"]
+atlas = ExtResource("2_56gi6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtk1w"]
+atlas = ExtResource("2_56gi6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlxoe"]
+atlas = ExtResource("2_56gi6")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0kq8c"]
+atlas = ExtResource("2_56gi6")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvdm2"]
+atlas = ExtResource("3_hsbgv")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ed6rh"]
+atlas = ExtResource("3_hsbgv")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jm6ap"]
+atlas = ExtResource("3_hsbgv")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xs51n"]
+atlas = ExtResource("3_hsbgv")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfx86"]
+atlas = ExtResource("3_hsbgv")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e04fj"]
+atlas = ExtResource("3_hsbgv")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tvdm2"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_hsbgv")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_bjb11")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_dtk1w")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_mlxoe")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_0kq8c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_tvdm2")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ed6rh")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_jm6ap")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_xs51n")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_lfx86")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_e04fj")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sxmqc"]
+radius = 22.0
+
+[node name="CannonProjectile" type="Area2D" unique_id=1542930704]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_56gi6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=475706742]
+position = Vector2(1, -1)
+scale = Vector2(0.5078125, 0.5078125)
+sprite_frames = SubResource("SpriteFrames_tvdm2")
+animation = &"hit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1517165976]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_sxmqc")
+
+[node name="Notifier" type="VisibleOnScreenNotifier2D" parent="." unique_id=2127074811]

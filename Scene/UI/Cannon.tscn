@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://n4jnftgm1xsy" path="res://Scripts/CharacterCard.cs" id="1_28eld"]
 [ext_resource type="Texture2D" uid="uid://r2bapvi6kbd6" path="res://Assets/UI/unit_frame.png" id="2_a61d6"]
 [ext_resource type="Texture2D" uid="uid://4byw53h8kh0d" path="res://Assets/sun.png" id="3_uunpx"]
-[ext_resource type="Texture2D" uid="uid://ca2td737mdnms" path="res://Assets/cannon.png" id="4_28eld"]
+[ext_resource type="Texture2D" uid="uid://dkve0kn33xwll" path="res://Assets/cannonbymillie.png" id="4_28eld"]
 
 [node name="CannonCard" type="Control" unique_id=87734872]
 custom_minimum_size = Vector2(80, 130)

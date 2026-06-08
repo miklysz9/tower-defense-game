@@ -3,29 +3,39 @@ using System;
 
 public partial class Cannon : PlantBase
 {
-	[Export] public float ShootInterval = 3.0f;   // Armata strzela rzadziej (np. co 3 sekundy)
-	[Export] public int Damage = 100;              // Ale zadaje potężne obrażenia!
+	[Export] public float ShootInterval = 5.0f;
+	[Export] public int Damage = 100;
 	[Export] public PackedScene ProjectileScene;
+
+	// BARDZO WAŻNE: Wpisz tutaj numer klatki (licząc od 0), w której na grafice pojawia się wybuch!
+	// Jeśli Twoja animacja ma np. 5 klatek, a armata "bucha" na trzecim obrazku, wpisz tutaj 2.
+	[Export] public int ShootFrameNumber = 2; 
 
 	private Timer _shootTimer;
 	private bool _zombieInRow = false;
 	private Area2D _detectionArea;
+	private AnimatedSprite2D _animatedSprite;
 
 	protected override void OnReady()
 	{
+		_animatedSprite = GetNode<AnimatedSprite2D>("Sprite2D");
+		_animatedSprite.Play("idle");
+		
+		// Podpinamy sygnały animacji
+		_animatedSprite.AnimationFinished += OnAnimationFinished;
+		_animatedSprite.FrameChanged += OnAnimationFrameChanged; // NOWOŚĆ: Reagujemy na każdą klatkę
+		
 		PlantName = "Heavy Cannon";
-		MaxHealth = 300; // Większa roślina ma więcej zdrowia
-		Cost = 250;      // Wyższy koszt za dużą siłę ognia
+		MaxHealth = 300;
+		Cost = 250;
 
-		// USTAWIENIE ROZMIARU NA 2 POLA SZEROKOŚCI I 1 POLE WYSOKOŚCI
 		GridWidth = 2;
 		GridHeight = 1;
 
-		// Timer strzelania
 		_shootTimer = new Timer();
 		_shootTimer.WaitTime = ShootInterval;
 		_shootTimer.Autostart = false;
-		_shootTimer.Timeout += Shoot;
+		_shootTimer.Timeout += TriggerAttackAnimation; // ZMIANA: Timer teraz tylko aktywuje animację
 		AddChild(_shootTimer);
 
 		_detectionArea = GetNodeOrNull<Area2D>("DetectionArea");
@@ -42,7 +52,11 @@ public partial class Cannon : PlantBase
 		{
 			_zombieInRow = true;
 			if (_shootTimer.IsStopped())
+			{
+				// Zamiast czekać 5 sekund na pierwszy strzał, odpalamy sekwencję ataku natychmiast!
+				TriggerAttackAnimation();
 				_shootTimer.Start();
+			}
 		}
 	}
 
@@ -58,30 +72,55 @@ public partial class Cannon : PlantBase
 		bool foundZombie = false;
 		foreach (var body in _detectionArea.GetOverlappingBodies())
 		{
-			if (body is ZombieBase zombie && GodotObject.IsInstanceValid(zombie))
+			if (body is ZombieBase zombie && GodotObject.IsInstanceValid(zombie) && !zombie.IsQueuedForDeletion())
 			{
-				foundZombie = true;
-				break;
+				if (zombie.IsZombieAlive)
+				{
+					foundZombie = true; 
+					break;
+				}
 			}
 		}
 
 		_zombieInRow = foundZombie;
+
 		if (!_zombieInRow)
 		{
 			_shootTimer.Stop();
+			_animatedSprite.Stop(); 
+			_animatedSprite.Play("idle");
 		}
 	}
 
-	private void Shoot()
+	// Ta metoda wykonuje się co 5 sekund (z timera)
+	private void TriggerAttackAnimation()
 	{
-		if (!_isAlive || ProjectileScene == null) return;
+		if (!_isAlive) return;
 
 		CheckIfZombieStillInRow();
 		if (!_zombieInRow) return;
 
+		// Timer daje tylko sygnał: "Zacznij się ruszać/ładować do strzału!"
+		_animatedSprite.Play("attack");
+	}
+
+	// NOWA METODA: Wywoływana przy KAŻDEJ zmianie obrazka w animacji
+	private void OnAnimationFrameChanged()
+	{
+		// Interesuje nas tylko moment, gdy leci animacja "attack" i doszliśmy do klatki strzału
+		if (_animatedSprite.Animation == "attack" && _animatedSprite.Frame == ShootFrameNumber)
+		{
+			SpawnProjectile();
+		}
+	}
+
+	// Logika fizycznego stworzenia kulki wyciągnięta do osobnej metody
+	private void SpawnProjectile()
+	{
+		if (ProjectileScene == null) return;
+
 		var projectile = ProjectileScene.Instantiate<Projectile>();
 		
-		// Szukamy punktu wylotu lufy armaty
 		var muzzle = GetNodeOrNull<Marker2D>("Muzzle");
 		if (muzzle != null)
 			projectile.GlobalPosition = muzzle.GlobalPosition;
@@ -91,6 +130,14 @@ public partial class Cannon : PlantBase
 		projectile.Damage = Damage;
 		GetParent().AddChild(projectile);
 		
-		GD.Print($"[{PlantName}] BUM! Wystrzelono potężną kulę armatnią!");
+		GD.Print($"[{PlantName}] BUM! Kulka wylatuje idealnie z klatką nr {ShootFrameNumber}!");
+	}
+
+	private void OnAnimationFinished()
+	{
+		if (_animatedSprite.Animation == "attack")
+		{
+			_animatedSprite.Play("idle");
+		}
 	}
 }
