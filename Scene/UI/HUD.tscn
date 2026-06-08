@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://djyb1745p1pw3" path="res://Scene/UI/Knight.tscn" id="3_knight"]
 [ext_resource type="PackedScene" uid="uid://bb6tfe465ju6l" path="res://Scene/UI/Sunflower.tscn" id="4_sunfl"]
 [ext_resource type="PackedScene" uid="uid://ckg5b8xi2ibff" path="res://Scene/UI/ObsidianKnight.tscn" id="5_obskn"]
-[ext_resource type="PackedScene" uid="uid://cyj48erdxxmuw" path="res://Scene/UI/Cannon.tscn" id="6_0shvu"]
+[ext_resource type="PackedScene" path="res://Scene/UI/Cannon.tscn" id="6_0shvu"]
 
 [node name="HUD" type="Control" unique_id=504301085]
 layout_mode = 3
@@ -39,6 +39,7 @@ alignment = 1
 layout_mode = 2
 
 [node name="ObsidianKnightCard" parent="HBoxContainer" unique_id=160563556 instance=ExtResource("5_obskn")]
+layout_mode = 2
 
 [node name="CannonCard" parent="HBoxContainer" unique_id=87734872 instance=ExtResource("6_0shvu")]
 layout_mode = 2
