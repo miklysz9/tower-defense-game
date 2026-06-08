@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://wsqpart46sww"]
 
-[ext_resource type="Script" path="res://Scripts/towers/Knight.cs" id="1_q5irc"]
+[ext_resource type="Script" uid="uid://bgsjbw5uymw4h" path="res://Scripts/towers/Knight.cs" id="1_q5irc"]
 [ext_resource type="PackedScene" uid="uid://b5dhknlhhjgnu" path="res://Scene/Projectile.tscn" id="2_dy6ut"]
 [ext_resource type="Texture2D" uid="uid://cmdsms840ujhw" path="res://Assets/Knight.png" id="3_eu5pa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_617d4"]
-size = Vector2(62, 58)
+size = Vector2(113, 58)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oueww"]
 size = Vector2(1155, 64)

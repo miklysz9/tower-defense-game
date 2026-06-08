@@ -72,21 +72,27 @@ public partial class GameBoard : Control
 			return;
 		}
 
-		if (!GridManager.Instance.IsCellEmpty(row, col))
+			// Tworzymy tymczasową instancję (lub czytamy parametry ze sceny), aby poznać jej rozmiar przed postawieniem
+		var tempPlant = _selectedPlantScene.Instantiate<PlantBase>();
+		int width = tempPlant.GridWidth;
+		int height = tempPlant.GridHeight;
+		tempPlant.QueueFree(); // Usuwamy obiekt tymczasowy
+
+		// Sprawdzamy czy cały obszar dla tej rośliny jest pusty
+		if (!GridManager.Instance.CanPlacePlantAt(row, col, width, height))
 		{
-			GD.Print("[GameBoard] Komórka zajęta!");
+			GD.Print("[GameBoard] Nie ma wystarczająco dużo miejsca dla tej rośliny!");
 			return;
 		}
 
 		if (!SunManager.Instance.SpendSun(_selectedPlantCost))
-			return;   // SpendSun wypisze błąd
+			return;
 
-		// Instancjonuj i postaw roślinę
+		// Instancjonuj i postaw roślinę (PlacePlant zajmie się resztą)
 		var plant = _selectedPlantScene.Instantiate<PlantBase>();
 		AddChild(plant);
 		GridManager.Instance.PlacePlant(plant, row, col);
 
-		// Po posadzeniu odznacz (jeden zakup = jedno zasadzenie)
 		DeselectPlant();
 
 		// Powiadom HUD o posadzeniu — odznacz kartę i zaktualizuj dostępność

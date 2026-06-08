@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://ute22n6hgksn" path="res://Scripts/HUD.cs" id="1_0apqc"]
 [ext_resource type="Texture2D" uid="uid://onds2sh70pug" path="res://Assets/UI/Ui_frame.png" id="2_e3kos"]
-[ext_resource type="PackedScene" path="res://Scene/UI/Knight.tscn" id="3_knight"]
+[ext_resource type="PackedScene" uid="uid://djyb1745p1pw3" path="res://Scene/UI/Knight.tscn" id="3_knight"]
 [ext_resource type="PackedScene" uid="uid://bb6tfe465ju6l" path="res://Scene/UI/Sunflower.tscn" id="4_sunfl"]
 [ext_resource type="PackedScene" uid="uid://ckg5b8xi2ibff" path="res://Scene/UI/ObsidianKnight.tscn" id="5_obskn"]
+[ext_resource type="PackedScene" uid="uid://cyj48erdxxmuw" path="res://Scene/UI/Cannon.tscn" id="6_0shvu"]
 
 [node name="HUD" type="Control" unique_id=504301085]
 layout_mode = 3
@@ -35,8 +36,12 @@ alignment = 1
 [node name="SunflowerCard" parent="HBoxContainer" unique_id=130341990 instance=ExtResource("4_sunfl")]
 
 [node name="KnightCard" parent="HBoxContainer" unique_id=763025362 instance=ExtResource("3_knight")]
+layout_mode = 2
 
 [node name="ObsidianKnightCard" parent="HBoxContainer" unique_id=160563556 instance=ExtResource("5_obskn")]
+
+[node name="CannonCard" parent="HBoxContainer" unique_id=87734872 instance=ExtResource("6_0shvu")]
+layout_mode = 2
 
 [node name="SunLabel" type="Label" parent="." unique_id=730313530]
 layout_mode = 0

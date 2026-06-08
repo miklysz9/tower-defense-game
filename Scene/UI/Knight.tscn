@@ -1,38 +1,35 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://djyb1745p1pw3"]
 
-[ext_resource type="Script" path="res://Scripts/CharacterCard.cs" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://r2bapvi6kbd6" path="res://Assets/UI/unit_frame.png" id="1_brk4j"]
+[ext_resource type="Script" uid="uid://n4jnftgm1xsy" path="res://Scripts/CharacterCard.cs" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://4byw53h8kh0d" path="res://Assets/sun.png" id="2_eyhmr"]
 [ext_resource type="Texture2D" uid="uid://cmdsms840ujhw" path="res://Assets/Knight.png" id="3_s2s4r"]
 
-[node name="KnightCard" type="Control"]
+[node name="KnightCard" type="Control" unique_id=87734872]
 custom_minimum_size = Vector2(80, 130)
-layout_mode = 2
-mouse_filter = 0
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_script")
 TowerScenePath = "res://Scene/towers/Knight.tscn"
-Cost = 100
 DisplayName = "Knight"
 
-[node name="Frame" type="Sprite2D" parent="."]
+[node name="Frame" type="Sprite2D" parent="." unique_id=284267778]
 position = Vector2(40, 65)
 texture = ExtResource("1_brk4j")
 
-[node name="Unit_name" type="Label" parent="."]
+[node name="Unit_name" type="Label" parent="." unique_id=183612716]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
 offset_right = 80.0
 offset_bottom = 18.0
 theme_override_font_sizes/font_size = 13
 text = "Knight"
 horizontal_alignment = 1
 
-[node name="Sun" type="Sprite2D" parent="."]
+[node name="Sun" type="Sprite2D" parent="." unique_id=1659421541]
 position = Vector2(21, 108)
 texture = ExtResource("2_eyhmr")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1740824902]
 layout_mode = 0
 offset_left = 38.0
 offset_top = 97.0
@@ -41,6 +38,6 @@ offset_bottom = 120.0
 text = "100"
 horizontal_alignment = 1
 
-[node name="Unit_img" type="Sprite2D" parent="."]
+[node name="Unit_img" type="Sprite2D" parent="." unique_id=179877899]
 position = Vector2(42, 52)
 texture = ExtResource("3_s2s4r")
