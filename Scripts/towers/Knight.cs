@@ -7,6 +7,7 @@ public partial class Knight : PlantBase
 	[Export] public int    Damage         = 20;
 	[Export] public PackedScene ProjectileScene;     // przypisz Projectile.tscn
 
+	private AnimatedSprite2D _animatedSprite;
 	private Timer  _shootTimer;
 	private bool   _zombieInRow = false;
 
@@ -15,6 +16,9 @@ public partial class Knight : PlantBase
 
 	protected override void OnReady()
 	{
+		_animatedSprite = GetNode<AnimatedSprite2D>("Sprite2D");
+		_animatedSprite.Play("idle");
+		
 		PlantName = "Knight";
 		MaxHealth = 150;
 		Cost      = 100;
@@ -41,6 +45,7 @@ public partial class Knight : PlantBase
 	{
 		if (body is ZombieBase)
 		{
+			_animatedSprite.Play("attack");
 			_zombieInRow = true;
 			if (_shootTimer.IsStopped())
 				_shootTimer.Start();
@@ -86,8 +91,11 @@ public partial class Knight : PlantBase
 
 		// DODAJ TO: Zanim wystrzelisz, upewnij się, że cel wciąż tam fizycznie stoi
 		CheckIfZombieStillInRow();
-		if (!_zombieInRow) return; // Jeśli rząd jest już czysty, przerywamy strzał
-
+		
+		if (!_zombieInRow){
+			_animatedSprite.Play("idle");
+			return; // Jeśli rząd jest już czysty, przerywamy strzał
+		}  
 		var projectile = ProjectileScene.Instantiate<Projectile>();
 		
 		var muzzle = GetNodeOrNull<Marker2D>("Muzzle");

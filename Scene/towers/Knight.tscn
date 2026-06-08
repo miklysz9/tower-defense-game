@@ -1,8 +1,98 @@
 [gd_scene format=3 uid="uid://wsqpart46sww"]
 
-[ext_resource type="Script" path="res://Scripts/towers/Knight.cs" id="1_q5irc"]
+[ext_resource type="Script" uid="uid://bgsjbw5uymw4h" path="res://Scripts/towers/Knight.cs" id="1_q5irc"]
 [ext_resource type="PackedScene" uid="uid://b5dhknlhhjgnu" path="res://Scene/Projectile.tscn" id="2_dy6ut"]
-[ext_resource type="Texture2D" uid="uid://cmdsms840ujhw" path="res://Assets/Knight.png" id="3_eu5pa"]
+[ext_resource type="Texture2D" uid="uid://btr2pfuorqevx" path="res://Assets/Knight-sheet.png" id="3_0rotp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pb4m4"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ubnyk"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34huw"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svvtf"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkkn2"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fblw8"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ys4nl"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0ccr"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j66xv"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a1tdp"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ch8bm"]
+atlas = ExtResource("3_0rotp")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b3iwh"]
+animations = [{
+"frames": [{
+"duration": 3.5,
+"texture": SubResource("AtlasTexture_pb4m4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ubnyk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34huw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svvtf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkkn2")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_fblw8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ys4nl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0ccr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j66xv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a1tdp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ch8bm")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_617d4"]
 size = Vector2(62, 58)
@@ -15,8 +105,10 @@ collision_mask = 2
 script = ExtResource("1_q5irc")
 ProjectileScene = ExtResource("2_dy6ut")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=280937004]
-texture = ExtResource("3_eu5pa")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1146229929]
+sprite_frames = SubResource("SpriteFrames_b3iwh")
+animation = &"attack"
+frame_progress = 0.30956239
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1777058369]
 light_mask = 2
