@@ -23,7 +23,7 @@ public partial class Projectile : Area2D
 		Position += new Vector2(Speed * (float)delta, 0);
 	}
 
-	private void OnBodyEntered(Node2D body)
+	protected virtual void OnBodyEntered(Node2D body)
 	{
 		if (body is ZombieBase zombie)
 		{

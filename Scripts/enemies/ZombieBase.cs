@@ -18,6 +18,7 @@ public partial class ZombieBase : CharacterBody2D
 	protected bool      _isAlive   = true;
 	protected PlantBase _targetPlant = null;     // roślina którą aktualnie atakuje
 	private   float     _attackTimer = 0f;
+	public bool IsZombieAlive => _isAlive;
 
 	// ── Sygnały ─────────────────────────────────────────────────────────
 	[Signal] public delegate void ZombieDiedEventHandler(ZombieBase zombie);
