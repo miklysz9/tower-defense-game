@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Peashooter : PlantBase
+public partial class Knight : PlantBase
 {
 	[Export] public float  ShootInterval  = 1.5f;   // sekundy między strzałami
 	[Export] public int    Damage         = 20;
@@ -15,7 +15,7 @@ public partial class Peashooter : PlantBase
 
 	protected override void OnReady()
 	{
-		PlantName = "Peashooter";
+		PlantName = "Knight";
 		MaxHealth = 150;
 		Cost      = 100;
 

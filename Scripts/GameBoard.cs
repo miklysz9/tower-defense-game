@@ -18,9 +18,34 @@ public partial class GameBoard : Control
 		_cellHighlight = GetNodeOrNull<Node2D>("CellHighlight");
 		if (_cellHighlight != null)
 			_cellHighlight.Visible = false;
+
+		SpawnGlyphs();
 	}
 
-	public override void _Input(InputEvent @event)
+	private void SpawnGlyphs()
+	{
+		var glyphScene = GD.Load<PackedScene>("res://Scene/towers/Glyph.tscn");
+		if (glyphScene == null)
+		{
+			GD.PrintErr("[GameBoard] Nie można załadować sceny Glyph.tscn!");
+			return;
+		}
+
+		for (int r = 0; r < GridManager.Instance.Rows; r++)
+		{
+			var glyph = glyphScene.Instantiate<PlantBase>();
+			AddChild(glyph);
+
+			// Ustaw pozycję po lewej stronie siatki
+			Vector2 firstCellWorldPos = GridManager.Instance.GridToWorld(r, 0);
+			float glyphX = GridManager.Instance.Origin.X - GridManager.Instance.CellSize / 2f - 20f;
+			glyph.GlobalPosition = new Vector2(glyphX, firstCellWorldPos.Y);
+			
+			glyph.SetGridPosition(r, -1);
+		}
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventMouseButton mouseEvent
 			&& mouseEvent.Pressed
@@ -28,8 +53,6 @@ public partial class GameBoard : Control
 		{
 			HandleClick(mouseEvent.GlobalPosition);
 		}
-
-		
 	}
 	// DODAJEMY TĘ METODĘ:
 	public override void _Process(double delta)
@@ -74,22 +97,38 @@ public partial class GameBoard : Control
 			return;
 		}
 
-		if (!GridManager.Instance.IsCellEmpty(row, col))
+			// Tworzymy tymczasową instancję (lub czytamy parametry ze sceny), aby poznać jej rozmiar przed postawieniem
+		var tempPlant = _selectedPlantScene.Instantiate<PlantBase>();
+		int width = tempPlant.GridWidth;
+		int height = tempPlant.GridHeight;
+		tempPlant.QueueFree(); // Usuwamy obiekt tymczasowy
+
+		// Sprawdzamy czy cały obszar dla tej rośliny jest pusty
+		if (!GridManager.Instance.CanPlacePlantAt(row, col, width, height))
 		{
-			GD.Print("[GameBoard] Komórka zajęta!");
+			GD.Print("[GameBoard] Nie ma wystarczająco dużo miejsca dla tej rośliny!");
 			return;
 		}
 
 		if (!SunManager.Instance.SpendSun(_selectedPlantCost))
-			return;   // SpendSun wypisze błąd
+			return;
 
-		// Instancjonuj i postaw roślinę
+		// Instancjonuj i postaw roślinę (PlacePlant zajmie się resztą)
 		var plant = _selectedPlantScene.Instantiate<PlantBase>();
 		AddChild(plant);
 		GridManager.Instance.PlacePlant(plant, row, col);
 
-		// Po posadzeniu odznacz (jeden zakup = jedno zasadzenie)
 		DeselectPlant();
+
+		// Powiadom HUD o posadzeniu — odznacz kartę i zaktualizuj dostępność
+		var hud = GetTree().CurrentScene.GetNodeOrNull<HUD>("%HUD");
+		if (hud == null)
+		{
+			// Szukaj w CanvasLayer/UI
+			var ui = GetTree().CurrentScene.GetNodeOrNull<CanvasLayer>("UI");
+			hud = ui?.GetNodeOrNull<HUD>("HUD");
+		}
+		hud?.OnPlantPlaced();
 	}
 
 	// ── Podświetlenie komórki ────────────────────────────────────────────

@@ -46,32 +46,64 @@ public partial class GridManager : Node
 	public bool IsInBounds(int row, int col)
 		=> row >= 0 && row < Rows && col >= 0 && col < Cols;
 
-	public bool IsCellEmpty(int row, int col)
-		=> IsInBounds(row, col) && _grid[row, col] == null;
-
-	/// <summary>
-	/// Postaw roślinę na siatce. Zwraca true gdy się udało.
-	/// </summary>
-	public bool PlacePlant(PlantBase plant, int row, int col)
+	// Sprawdza, czy cała strefa wymagana przez roślinę jest wolna
+	public bool CanPlacePlantAt(int startRow, int startCol, int width, int height)
 	{
-		if (!IsCellEmpty(row, col)) return false;
-
-		_grid[row, col] = plant;
-		plant.SetGridPosition(row, col);
-		plant.GlobalPosition = GridToWorld(row, col);
-
-		// Posprzątaj gdy roślina zginie
-		plant.PlantDied += OnPlantDied;
-
-		GD.Print($"[GridManager] Postawiono {plant.PlantName} na [{row},{col}]");
+		for (int r = startRow; r < startRow + height; r++)
+		{
+			for (int c = startCol; c < startCol + width; c++)
+			{
+				if (!IsInBounds(r, c) || _grid[r, c] != null)
+				{
+					return false; // Chociaż jedno pole jest zajęte lub poza mapą
+				}
+			}
+		}
 		return true;
 	}
 
-	/// <summary>Usuń roślinę z siatki (np. po jej śmierci).</summary>
+	public bool PlacePlant(PlantBase plant, int row, int col)
+	{
+		// Sprawdzamy dynamicznie gabaryty rośliny zamiast jednego pola
+		if (!CanPlacePlantAt(row, col, plant.GridWidth, plant.GridHeight)) 
+			return false;
+
+		// Blokujemy WSZYSTKIE komórki w siatce, na których stoi ta roślina
+		for (int r = row; r < row + plant.GridHeight; r++)
+		{
+			for (int c = col; c < col + plant.GridWidth; c++)
+			{
+				_grid[r, c] = plant;
+				plant.OccupiedCells.Add(new Vector2I(r, c));
+			}
+		}
+
+		plant.SetGridPosition(row, col);
+
+		// Pozycja w świecie: dla obiektów wielopolowych obliczamy środek między zajmowanymi komórkami
+		Vector2 startPos = GridToWorld(row, col);
+		Vector2 endPos = GridToWorld(row + plant.GridHeight - 1, col + plant.GridWidth - 1);
+		plant.GlobalPosition = (startPos + endPos) / 2f;
+
+		plant.PlantDied += OnPlantDied;
+
+		GD.Print($"[GridManager] Postawiono {plant.PlantName} na rozmiar {plant.GridWidth}x{plant.GridHeight}");
+		return true;
+	}
+
+	// Czyszczenie wszystkich pól, które roślina zajmowała po jej śmierci
 	public void RemovePlant(int row, int col)
 	{
 		if (!IsInBounds(row, col)) return;
-		_grid[row, col] = null;
+		
+		PlantBase plant = _grid[row, col];
+		if (plant != null)
+		{
+			foreach (Vector2I cell in plant.OccupiedCells)
+			{
+				_grid[cell.X, cell.Y] = null;
+			}
+		}
 	}
 
 	public PlantBase GetPlant(int row, int col)

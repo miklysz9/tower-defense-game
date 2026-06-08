@@ -2,79 +2,83 @@ using Godot;
 
 /// <summary>
 /// Bazowa klasa dla wszystkich roślin. Dziedziczy po Node2D.
-/// Każda roślina (Sunflower, Peashooter itp.) rozszerza tę klasę.
+/// Każda roślina (Sunflower, Knight itp.) rozszerza tę klasę.
 /// </summary>
 public partial class PlantBase : Node2D
 {
-    // ── Eksportowane pola (edytowalne w Inspektorze Godota) ──────────────
-    [Export] public int MaxHealth     = 100;
-    [Export] public int Cost          = 100;   // koszt w słońcu
-    [Export] public string PlantName  = "Plant";
+	// ── Eksportowane pola (edytowalne w Inspektorze Godota) ──────────────
+	[Export] public int MaxHealth     = 100;
+	[Export] public int Cost          = 100;   // koszt w słońcu
+	[Export] public string PlantName  = "Plant";
+	[Export] public int GridWidth = 1;  // Ile kolumn zajmuje roślina
+	[Export] public int GridHeight = 1; // Ile rzędów zajmuje roślina
 
-    // ── Stan ────────────────────────────────────────────────────────────
-    protected int _currentHealth;
-    protected bool _isAlive = true;
+	public System.Collections.Generic.List<Vector2I> OccupiedCells = new System.Collections.Generic.List<Vector2I>();
 
-    // Pozycja na siatce (ustawiana przez GridManager)
-    public int GridRow { get; private set; }
-    public int GridCol { get; private set; }
+	// ── Stan ────────────────────────────────────────────────────────────
+	protected int _currentHealth;
+	protected bool _isAlive = true;
 
-    // ── Sygnały ─────────────────────────────────────────────────────────
-    [Signal] public delegate void PlantDiedEventHandler(PlantBase plant);
-    [Signal] public delegate void HealthChangedEventHandler(int current, int max);
+	// Pozycja na siatce (ustawiana przez GridManager)
+	public int GridRow { get; private set; }
+	public int GridCol { get; private set; }
 
-    // ── Cykl życia Node ─────────────────────────────────────────────────
-    public override void _Ready()
-    {
-        _currentHealth = MaxHealth;
-        OnReady();
-    }
+	// ── Sygnały ─────────────────────────────────────────────────────────
+	[Signal] public delegate void PlantDiedEventHandler(PlantBase plant);
+	[Signal] public delegate void HealthChangedEventHandler(int current, int max);
 
-    public override void _Process(double delta)
-    {
-        if (!_isAlive) return;
-        OnUpdate(delta);
-    }
+	// ── Cykl życia Node ─────────────────────────────────────────────────
+	public override void _Ready()
+	{
+		_currentHealth = MaxHealth;
+		OnReady();
+	}
 
-    // ── Metody do nadpisania w podklasach ────────────────────────────────
+	public override void _Process(double delta)
+	{
+		if (!_isAlive) return;
+		OnUpdate(delta);
+	}
 
-    /// <summary>Wywoływane raz przy inicjalizacji (zamiast _Ready w podklasach).</summary>
-    protected virtual void OnReady() { }
+	// ── Metody do nadpisania w podklasach ────────────────────────────────
 
-    /// <summary>Wywoływane co klatkę (zamiast _Process w podklasach).</summary>
-    protected virtual void OnUpdate(double delta) { }
+	/// <summary>Wywoływane raz przy inicjalizacji (zamiast _Ready w podklasach).</summary>
+	protected virtual void OnReady() { }
 
-    /// <summary>Wywoływane gdy roślina zostaje zniszczona.</summary>
-    protected virtual void OnDeath() { }
+	/// <summary>Wywoływane co klatkę (zamiast _Process w podklasach).</summary>
+	protected virtual void OnUpdate(double delta) { }
 
-    // ── API publiczne ────────────────────────────────────────────────────
+	/// <summary>Wywoływane gdy roślina zostaje zniszczona.</summary>
+	protected virtual void OnDeath() { }
 
-    /// <summary>Ustaw pozycję na siatce (wywołuje GridManager).</summary>
-    public void SetGridPosition(int row, int col)
-    {
-        GridRow = row;
-        GridCol = col;
-    }
+	// ── API publiczne ────────────────────────────────────────────────────
 
-    /// <summary>Zadaj obrażenia roślinie.</summary>
-    public void TakeDamage(int amount)
-    {
-        if (!_isAlive) return;
+	/// <summary>Ustaw pozycję na siatce (wywołuje GridManager).</summary>
+	public void SetGridPosition(int row, int col)
+	{
+		GridRow = row;
+		GridCol = col;
+	}
 
-        _currentHealth -= amount;
-        EmitSignal(SignalName.HealthChanged, _currentHealth, MaxHealth);
+	/// <summary>Zadaj obrażenia roślinie.</summary>
+	public void TakeDamage(int amount)
+	{
+		if (!_isAlive) return;
 
-        if (_currentHealth <= 0)
-            Die();
-    }
+		_currentHealth -= amount;
+		EmitSignal(SignalName.HealthChanged, _currentHealth, MaxHealth);
 
-    private void Die()
-    {
-        _isAlive = false;
-        OnDeath();
-        EmitSignal(SignalName.PlantDied, this);
+		if (_currentHealth <= 0)
+			Die();
+	}
 
-        // Prosta animacja śmierci (możesz zastąpić własną)
-        QueueFree();
-    }
+	private void Die()
+	{
+		_isAlive = false;
+		OnDeath();
+		EmitSignal(SignalName.PlantDied, this);
+
+		// Prosta animacja śmierci (możesz zastąpić własną)
+		QueueFree();
+	}
 }
