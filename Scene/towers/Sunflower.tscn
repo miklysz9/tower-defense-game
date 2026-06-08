@@ -2,7 +2,100 @@
 
 [ext_resource type="Script" uid="uid://b8es00c5vycna" path="res://Scripts/towers/Sunflower.cs" id="1_j1r0u"]
 [ext_resource type="PackedScene" uid="uid://6bxmndj5hne1" path="res://Scene/Sun.tscn" id="2_t0frf"]
-[ext_resource type="Texture2D" uid="uid://dqok45q4p22er" path="res://Assets/sunflower.png" id="3_ycub8"]
+[ext_resource type="Texture2D" uid="uid://bg0pr1ckq7pik" path="res://Assets/sunflower-sheet.png" id="4_t0frf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1r0u"]
+atlas = ExtResource("4_t0frf")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0frf"]
+atlas = ExtResource("4_t0frf")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycub8"]
+atlas = ExtResource("4_t0frf")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmcx4"]
+atlas = ExtResource("4_t0frf")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qx0i"]
+atlas = ExtResource("4_t0frf")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pji3m"]
+load_path = "res://.godot/imported/sunflower-sheet.png-1e7c8ba2cc3598d5c22a383008aeba67.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mabfp"]
+atlas = SubResource("CompressedTexture2D_pji3m")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ataci"]
+atlas = SubResource("CompressedTexture2D_pji3m")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0us84"]
+atlas = SubResource("CompressedTexture2D_pji3m")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fak4"]
+atlas = SubResource("CompressedTexture2D_pji3m")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1p0pd"]
+atlas = SubResource("CompressedTexture2D_pji3m")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8htnc"]
+atlas = SubResource("CompressedTexture2D_pji3m")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dmcx4"]
+animations = [{
+"frames": [{
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_j1r0u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0frf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycub8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmcx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0qx0i")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mabfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ataci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0us84")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fak4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1p0pd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8htnc")
+}],
+"loop": false,
+"name": &"summon",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ab2xu"]
 size = Vector2(33, 52)
@@ -12,8 +105,10 @@ collision_mask = 0
 script = ExtResource("1_j1r0u")
 SunScene = ExtResource("2_t0frf")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=579499030]
-texture = ExtResource("3_ycub8")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=868496261]
+sprite_frames = SubResource("SpriteFrames_dmcx4")
+animation = &"idle"
+frame_progress = 0.5180789
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1198958868]
 position = Vector2(-0.5, 7)

@@ -111,11 +111,48 @@ public partial class ZombieBase : CharacterBody2D
 			Die();
 	}
 
-	private void Die()
+	private async void Die()
 	{
+		if (!_isAlive) return;
+
 		_isAlive = false;
+		Velocity = Vector2.Zero;
+
+		// Wyłącz fizyczne kolizje i maski natychmiast
+		CollisionLayer = 0;
+		CollisionMask = 0;
+
+		// Wyłącz kształt kolizji CharacterBody2D
+		var collisionShape = GetNodeOrNull<CollisionShape2D>("CollisionShape2D");
+		if (collisionShape != null)
+		{
+			collisionShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		}
+
+		// Wyłącz obszar wykrywania HitArea (Area2D)
+		var area = GetNodeOrNull<Area2D>("HitArea");
+		if (area != null)
+		{
+			area.Monitoring = false;
+			area.Monitorable = false;
+			var areaCollision = area.GetNodeOrNull<CollisionShape2D>("CollisionShape2D");
+			if (areaCollision != null)
+			{
+				areaCollision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+			}
+		}
+
 		OnDeath();
 		EmitSignal(SignalName.ZombieDied, this);
+
+		// Odegraj animację śmierci, jeśli AnimatedSprite2D i animacja "death" istnieją
+		var sprite = GetNodeOrNull<AnimatedSprite2D>("Sprite2D");
+		if (sprite != null && sprite.SpriteFrames != null && sprite.SpriteFrames.HasAnimation("death"))
+		{
+			sprite.Play("death");
+			await ToSignal(sprite, AnimatedSprite2D.SignalName.AnimationFinished);
+		}
+
 		QueueFree();
 	}
 
