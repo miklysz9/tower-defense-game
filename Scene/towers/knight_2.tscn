@@ -181,7 +181,7 @@ position = Vector2(-633, -7)
 shape = SubResource("RectangleShape2D_oueww")
 
 [node name="FumeEffect" type="AnimatedSprite2D" parent="." unique_id=1834357891]
-visible = false
+z_index = 6
 position = Vector2(176, 1)
 sprite_frames = SubResource("SpriteFrames_jha5e")
 animation = &"attack"
