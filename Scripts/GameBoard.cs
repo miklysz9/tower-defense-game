@@ -97,7 +97,51 @@ public partial class GameBoard : Control
 			return;
 		}
 
-			// Tworzymy tymczasową instancję (lub czytamy parametry ze sceny), aby poznać jej rozmiar przed postawieniem
+		// ── FUZJA: Obsydian Knight + Obsydian Knight → Magmowy Kolos ─────────
+		var existingPlant = GridManager.Instance.GetPlant(row, col);
+		if (existingPlant is Knight2 existingKnight2)
+		{
+			var tempCheck = _selectedPlantScene.Instantiate<PlantBase>();
+			bool selectedIsKnight2 = tempCheck is Knight2;
+			tempCheck.QueueFree();
+
+			if (selectedIsKnight2)
+			{
+				TryFuseToMagmaKnight(row, col, existingKnight2);
+				return;
+			}
+		}
+
+		// ── FUZJA: Cannon + Cannon → Armata Szrapnelowa ───────────────────
+		if (existingPlant is Cannon existingCannon)
+		{
+			var tempCheck = _selectedPlantScene.Instantiate<PlantBase>();
+			bool selectedIsCannon = tempCheck is Cannon;
+			tempCheck.QueueFree();
+
+			if (selectedIsCannon)
+			{
+				TryFuseToShrapnelCannon(row, col, existingCannon);
+				return;
+			}
+		}
+
+		// ── FUZJA: Knight + Knight → Łucznik (Archer) ───────────────────
+		if (existingPlant is Knight existingKnight)
+		{
+			var tempCheck = _selectedPlantScene.Instantiate<PlantBase>();
+			bool selectedIsKnight = tempCheck is Knight;
+			tempCheck.QueueFree();
+
+			if (selectedIsKnight)
+			{
+				TryFuseToArcher(row, col, existingKnight);
+				return;
+			}
+		}
+		// ─────────────────────────────────────────────────────────────────────
+
+		// Tworzymy tymczasową instancję (lub czytamy parametry ze sceny), aby poznać jej rozmiar przed postawieniem
 		var tempPlant = _selectedPlantScene.Instantiate<PlantBase>();
 		int width = tempPlant.GridWidth;
 		int height = tempPlant.GridHeight;
@@ -121,10 +165,134 @@ public partial class GameBoard : Control
 		DeselectPlant();
 
 		// Powiadom HUD o posadzeniu — odznacz kartę i zaktualizuj dostępność
+		NotifyHud();
+	}
+
+	/// <summary>
+	/// Fuzja: usuwa istniejącego Knight2 i zastępuje go Magmowym Kolosem (MagmaKnight).
+	/// Koszt fuzji = koszt drugiego Obsydian Knighta (normalny koszt karty).
+	/// </summary>
+	private void TryFuseToMagmaKnight(int row, int col, PlantBase existingKnight)
+	{
+		if (!SunManager.Instance.CanAfford(_selectedPlantCost))
+		{
+			GD.Print("[GameBoard] Za mało słońca na fuzję!");
+			return;
+		}
+
+		if (!GodotObject.IsInstanceValid(existingKnight))
+			return;
+
+		GD.Print("[GameBoard] ✨ FUZJA! Obsydian Knight + Obsydian Knight → Magmowy Kolos!");
+
+		// Pobierz słońce za fuzję
+		SunManager.Instance.SpendSun(_selectedPlantCost);
+
+		// Usuń starego Knighta z siatki (czyści komórki w _grid[])
+		GridManager.Instance.RemovePlant(row, col);
+		// Usuń węzeł ze sceny (bez wywoływania Die() — nie chcemy sygnału PlantDied)
+		existingKnight.QueueFree();
+
+		// Załaduj i postaw Magmowego Kolosa
+		var magmaScene = GD.Load<PackedScene>("res://Scene/towers/MagmaKnight.tscn");
+		if (magmaScene == null)
+		{
+			GD.PrintErr("[GameBoard] Nie udało się załadować MagmaKnight.tscn!");
+			return;
+		}
+
+		var magmaKnight = magmaScene.Instantiate<PlantBase>();
+		AddChild(magmaKnight);
+		GridManager.Instance.PlacePlant(magmaKnight, row, col);
+
+		DeselectPlant();
+		NotifyHud();
+	}
+
+	/// <summary>
+	/// Fuzja: usuwa istniejącego Cannona i zastępuje go Armatą Szrapnelowa (ShrapnelCannon).
+	/// Cannon zajmuje 2 kratki (GridWidth=2) — pozycja startowa z plant.GridRow/GridCol.
+	/// </summary>
+	private void TryFuseToShrapnelCannon(int clickedRow, int clickedCol, PlantBase existingCannon)
+	{
+		if (!SunManager.Instance.CanAfford(_selectedPlantCost))
+		{
+			GD.Print("[GameBoard] Za mało słońca na fuzję armat!");
+			return;
+		}
+
+		if (!GodotObject.IsInstanceValid(existingCannon))
+			return;
+
+		GD.Print("[GameBoard] 💥 FUZJA! Cannon + Cannon → Armata Szrapnelowa!");
+
+		// Użyj oryginalnej pozycji armaty (lewa-górna komórka) — ważne dla 2-szerokich jednostek
+		int row = existingCannon.GridRow;
+		int col = existingCannon.GridCol;
+
+		SunManager.Instance.SpendSun(_selectedPlantCost);
+
+		// Usuń stary Cannon z siatki i sceny
+		GridManager.Instance.RemovePlant(clickedRow, clickedCol);
+		existingCannon.QueueFree();
+
+		// Załaduj i postaw Armatę Szrapnelowa
+		var shrapnelScene = GD.Load<PackedScene>("res://Scene/towers/ShrapnelCannon.tscn");
+		if (shrapnelScene == null)
+		{
+			GD.PrintErr("[GameBoard] Nie udało się załadować ShrapnelCannon.tscn!");
+			return;
+		}
+
+		var shrapnelCannon = shrapnelScene.Instantiate<PlantBase>();
+		AddChild(shrapnelCannon);
+		GridManager.Instance.PlacePlant(shrapnelCannon, row, col);
+
+		DeselectPlant();
+		NotifyHud();
+	}
+
+	/// <summary>
+	/// Fuzja: usuwa dwóch Knightów i zastępuje ich Łucznikiem (Archer).
+	/// </summary>
+	private void TryFuseToArcher(int row, int col, PlantBase existingKnight)
+	{
+		if (!SunManager.Instance.CanAfford(_selectedPlantCost))
+		{
+			GD.Print("[GameBoard] Za mało słońca na fuzję rycerzy!");
+			return;
+		}
+
+		if (!GodotObject.IsInstanceValid(existingKnight))
+			return;
+
+		GD.Print("[GameBoard] 🏹 FUZJA! Knight + Knight → Łucznik!");
+
+		SunManager.Instance.SpendSun(_selectedPlantCost);
+
+		GridManager.Instance.RemovePlant(row, col);
+		existingKnight.QueueFree();
+
+		var archerScene = GD.Load<PackedScene>("res://Scene/towers/Archer.tscn");
+		if (archerScene == null)
+		{
+			GD.PrintErr("[GameBoard] Nie udało się załadować Archer.tscn!");
+			return;
+		}
+
+		var archer = archerScene.Instantiate<PlantBase>();
+		AddChild(archer);
+		GridManager.Instance.PlacePlant(archer, row, col);
+
+		DeselectPlant();
+		NotifyHud();
+	}
+
+	private void NotifyHud()
+	{
 		var hud = GetTree().CurrentScene.GetNodeOrNull<HUD>("%HUD");
 		if (hud == null)
 		{
-			// Szukaj w CanvasLayer/UI
 			var ui = GetTree().CurrentScene.GetNodeOrNull<CanvasLayer>("UI");
 			hud = ui?.GetNodeOrNull<HUD>("HUD");
 		}
@@ -143,6 +311,22 @@ public partial class GameBoard : Control
 
 		if (GridManager.Instance.WorldToGrid(worldPos, out int row, out int col))
 		{
+			// Sprawdź czy możliwa jest jakaś fuzja (złote podświetlenie)
+			var existing  = GridManager.Instance.GetPlant(row, col);
+			var tempCheck = _selectedPlantScene.Instantiate<PlantBase>();
+
+			bool fusionPossible =
+				(existing is Knight2  && tempCheck is Knight2)  ||
+				(existing is Cannon   && tempCheck is Cannon)   ||
+				(existing is Knight   && tempCheck is Knight);
+
+			tempCheck.QueueFree();
+
+			if (_cellHighlight is Sprite2D highlightSprite)
+				highlightSprite.Modulate = fusionPossible
+					? new Color(1f, 0.8f, 0f, 1f)   // złoty = fuzja możliwa!
+					: Colors.White;
+
 			_cellHighlight.Visible        = true;
 			_cellHighlight.GlobalPosition = GridManager.Instance.GridToWorld(row, col);
 		}
