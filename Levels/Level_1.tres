@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_ksgqo"]
 script = ExtResource("2_a8fee")
-ZombiesToSpawn = Array[PackedScene]([ExtResource("1_a8fee"), ExtResource("1_numos"), ExtResource("1_numos")])
+ZombiesToSpawn = Array[PackedScene]([ExtResource("1_numos"), ExtResource("1_numos")])
 metadata/_custom_type_script = "uid://cyo8rskugj0ut"
 
 [sub_resource type="Resource" id="Resource_5gvsb"]
@@ -15,7 +15,17 @@ script = ExtResource("2_a8fee")
 ZombiesToSpawn = Array[PackedScene]([ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_numos")])
 metadata/_custom_type_script = "uid://cyo8rskugj0ut"
 
+[sub_resource type="Resource" id="Resource_a8fee"]
+script = ExtResource("2_a8fee")
+ZombiesToSpawn = Array[PackedScene]([ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_a8fee"), ExtResource("1_a8fee")])
+metadata/_custom_type_script = "uid://cyo8rskugj0ut"
+
+[sub_resource type="Resource" id="Resource_2m8f8"]
+script = ExtResource("2_a8fee")
+ZombiesToSpawn = Array[PackedScene]([ExtResource("1_a8fee"), ExtResource("1_a8fee"), ExtResource("1_a8fee"), ExtResource("1_a8fee"), ExtResource("1_a8fee"), ExtResource("1_a8fee"), ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_numos")])
+metadata/_custom_type_script = "uid://cyo8rskugj0ut"
+
 [resource]
 script = ExtResource("1_l7tad")
-Waves = Array[Object]([SubResource("Resource_ksgqo"), SubResource("Resource_5gvsb")])
+Waves = Array[Object]([SubResource("Resource_ksgqo"), SubResource("Resource_5gvsb"), SubResource("Resource_a8fee"), SubResource("Resource_2m8f8")])
 metadata/_custom_type_script = "uid://dpwfahtsod0v3"

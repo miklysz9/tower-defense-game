@@ -87,10 +87,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mqdu1"]
-size = Vector2(54, 52)
+size = Vector2(54, 49)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1rcjl"]
-size = Vector2(55, 64)
+size = Vector2(55, 46)
 
 [node name="Muk" type="CharacterBody2D" unique_id=980885381]
 position = Vector2(32, 32)
@@ -105,7 +105,7 @@ autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1055866387]
 visibility_layer = 2
-position = Vector2(0, -1)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_mqdu1")
 
 [node name="HitArea" type="Area2D" parent="." unique_id=1618857445]
@@ -114,5 +114,5 @@ position = Vector2(-114, 1)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=766157250]
-position = Vector2(104.5, -1)
+position = Vector2(104.5, 8)
 shape = SubResource("RectangleShape2D_1rcjl")
