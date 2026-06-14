@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c2tvvq5ewxgxl"]
+
+[ext_resource type="Script" path="res://Scripts/Projectile.cs" id="1_qxf0c"]
+[ext_resource type="Texture2D" path="res://Assets/arrow.png" id="2_arrow"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arrow"]
+size = Vector2(24, 6)
+
+[node name="Arrow" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_qxf0c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_arrow")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_arrow")
+
+[node name="Notifier" type="VisibleOnScreenNotifier2D" parent="."]

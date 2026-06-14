@@ -8,7 +8,7 @@ public partial class SunManager : Node
 {
 	public static SunManager Instance { get; private set; }
 
-	[Export] public int StartingSun = 300;
+	[Export] public int StartingSun = 10000;
 
 	private int _sun;
 	public  int Sun
