@@ -1,19 +1,29 @@
 [gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cw2xnyan22guj"]
 
 [ext_resource type="Script" uid="uid://dpwfahtsod0v3" path="res://Scripts/LevelData.cs" id="1_o5bsh"]
-[ext_resource type="PackedScene" uid="uid://wsqpart46sww" path="res://Scene/towers/Knight.tscn" id="1_sjdld"]
-[ext_resource type="PackedScene" uid="uid://ygiof8uam4th" path="res://Scene/towers/Sunflower.tscn" id="2_286qh"]
-[ext_resource type="PackedScene" uid="uid://cqbl4dvbfv68o" path="res://Scene/towers/knight_2.tscn" id="3_286qh"]
+[ext_resource type="PackedScene" uid="uid://bw1akp5i7k8qx" path="res://Scene/enemies/zombie_base.tscn" id="1_numos"]
+[ext_resource type="PackedScene" uid="uid://702773g3rqn5" path="res://Scene/enemies/muk.tscn" id="2_muk"]
+[ext_resource type="Script" uid="uid://cyo8rskugj0ut" path="res://Scripts/WaveData.cs" id="3_wavedata"]
+
+[sub_resource type="Resource" id="Resource_wave1"]
+script = ExtResource("3_wavedata")
+ZombiesToSpawn = Array[PackedScene]([ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_numos")])
+metadata/_custom_type_script = "uid://cyo8rskugj0ut"
+
+[sub_resource type="Resource" id="Resource_wave2"]
+script = ExtResource("3_wavedata")
+ZombiesToSpawn = Array[PackedScene]([ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("2_muk")])
+metadata/_custom_type_script = "uid://cyo8rskugj0ut"
+
+[sub_resource type="Resource" id="Resource_wave3"]
+script = ExtResource("3_wavedata")
+ZombiesToSpawn = Array[PackedScene]([ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("1_numos"), ExtResource("2_muk"), ExtResource("2_muk")])
+metadata/_custom_type_script = "uid://cyo8rskugj0ut"
 
 [resource]
 script = ExtResource("1_o5bsh")
 LevelNumber = 2
-TotalWaves = 4
 StartingSun = 200
-ZombiesPerWave = Dictionary[int, int]({
-1: 4,
-2: 6,
-3: 10
-})
-AvailablePlants = Array[PackedScene]([ExtResource("1_sjdld"), ExtResource("2_286qh"), ExtResource("3_286qh")])
+WaveInterval = 20.0
+Waves = Array[Object]([SubResource("Resource_wave1"), SubResource("Resource_wave2"), SubResource("Resource_wave3")])
 metadata/_custom_type_script = "uid://dpwfahtsod0v3"

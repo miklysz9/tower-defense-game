@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://dfy4nsooueimj" path="res://GameManager.cs" id="1_script"]
 [ext_resource type="Resource" uid="uid://bnacskld5sxcn" path="res://Levels/Level_1.tres" id="2_udwf8"]
 [ext_resource type="Resource" uid="uid://cw2xnyan22guj" path="res://Levels/Level_2.tres" id="3_dobux"]
+[ext_resource type="Resource" uid="uid://cw3xnyan33guj" path="res://Levels/Level_3.tres" id="4_lvl3"]
+[ext_resource type="Resource" uid="uid://cw4xnyan44guj" path="res://Levels/Level_4.tres" id="5_lvl4"]
 
 [node name="GameManager" type="Node" unique_id=1964321918]
 script = ExtResource("1_script")
-LevelsList = Array[Object]([ExtResource("2_udwf8"), ExtResource("3_dobux")])
+LevelsList = Array[Object]([ExtResource("2_udwf8"), ExtResource("3_dobux"), ExtResource("4_lvl3"), ExtResource("5_lvl4")])
