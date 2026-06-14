@@ -28,6 +28,7 @@ public partial class GameManager : Node
 
 	private int   _currentWave    = 0;
 	private int   _aliveZombies   = 0;
+	private int   _zombiesRemainingToSpawn = 0;
 	private Timer _waveTimer;
 
 	public float WaveInterval { get; private set; } = 20f;
@@ -114,6 +115,9 @@ public partial class GameManager : Node
 			return;
 		}
 
+		// Ustawiamy liczbę pozostałych do zrodzenia zombie w tej fali
+		_zombiesRemainingToSpawn = waveInfo.ZombiesToSpawn.Count;
+
 		// Przechodzimy przez zdefiniowaną listę przeciwników dla tej fali
 		for (int i = 0; i < waveInfo.ZombiesToSpawn.Count; i++)
 		{
@@ -145,25 +149,29 @@ public partial class GameManager : Node
 
 		GetTree().CurrentScene.AddChild(zombie);
 		_aliveZombies++;
+		_zombiesRemainingToSpawn--;
 	}
 
 	// ── Zdarzenia zombie ─────────────────────────────────────────────────
 
 	private void OnZombieDied(ZombieBase zombie)
 	{
+		if (State != GameState.Playing) return;
 		_aliveZombies--;
 		CheckWaveEnd();
 	}
 
 	private void OnZombieReachedEnd()
 	{
+		if (State != GameState.Playing) return;
 		_aliveZombies--;
 		LoseGame(); // zombie dotarł do domu → przegrana
 	}
 
 	private void CheckWaveEnd()
 	{
-		if (_aliveZombies > 0) return;
+		if (State != GameState.Playing) return;
+		if (_zombiesRemainingToSpawn > 0 || _aliveZombies > 0) return;
 
 		GD.Print($"[GameManager] Fala {_currentWave} zakończona!");
 		EmitSignal(SignalName.WaveEnded, _currentWave);
@@ -249,6 +257,7 @@ public partial class GameManager : Node
 		// Inicjalizujemy parametry gry dynamicznie na podstawie zasobu
 		_currentWave = 0;
 		_aliveZombies = 0;
+		_zombiesRemainingToSpawn = 0;
 		TotalWaves = _currentLevelData.TotalWaves; 
 		WaveInterval = _currentLevelData.WaveInterval;
 
