@@ -61,7 +61,7 @@ public partial class PlantBase : Node2D
 	}
 
 	/// <summary>Zadaj obrażenia roślinie.</summary>
-	public void TakeDamage(int amount)
+	public virtual void TakeDamage(int amount)
 	{
 		if (!_isAlive) return;
 

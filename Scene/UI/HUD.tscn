@@ -5,7 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://djyb1745p1pw3" path="res://Scene/UI/Knight.tscn" id="3_knight"]
 [ext_resource type="PackedScene" uid="uid://bb6tfe465ju6l" path="res://Scene/UI/Sunflower.tscn" id="4_sunfl"]
 [ext_resource type="PackedScene" uid="uid://ckg5b8xi2ibff" path="res://Scene/UI/ObsidianKnight.tscn" id="5_obskn"]
-[ext_resource type="PackedScene" path="res://Scene/UI/Cannon.tscn" id="6_0shvu"]
+[ext_resource type="PackedScene" uid="uid://dapccioemupoq" path="res://Scene/UI/Cannon.tscn" id="6_0shvu"]
+[ext_resource type="PackedScene" uid="uid://bdvwsje48u8xn" path="res://Scene/UI/shilded_knight_card.tscn" id="7_fjbua"]
 
 [node name="HUD" type="Control" unique_id=504301085]
 layout_mode = 3
@@ -42,6 +43,9 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="CannonCard" parent="HBoxContainer" unique_id=87734872 instance=ExtResource("6_0shvu")]
+layout_mode = 2
+
+[node name="ShildedKnightCard" parent="HBoxContainer" unique_id=626799175 instance=ExtResource("7_fjbua")]
 layout_mode = 2
 
 [node name="SunLabel" type="Label" parent="." unique_id=730313530]
