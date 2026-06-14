@@ -21,6 +21,12 @@ public partial class GridManager : Node
 		_grid    = new PlantBase[Rows, Cols];
 	}
 
+	public void ResetGrid()
+	{
+		_grid = new PlantBase[Rows, Cols];
+		GD.Print("[GridManager] Zresetowano siatkę roślin.");
+	}
+
 	// ── Konwersja współrzędnych ──────────────────────────────────────────
 
 	/// <summary>Przelicza pozycję na siatce → pozycję w świecie (środek komórki).</summary>

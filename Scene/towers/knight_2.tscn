@@ -228,7 +228,7 @@ script = ExtResource("1_rqx73")
 sprite_frames = SubResource("SpriteFrames_lo2nh")
 animation = &"attack"
 autoplay = "idle"
-frame_progress = 0.9212994
+frame_progress = 0.17609741
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1777058369]
 light_mask = 2

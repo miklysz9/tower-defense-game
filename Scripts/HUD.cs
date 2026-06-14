@@ -46,6 +46,14 @@ public partial class HUD : Control
 		GD.Print($"[HUD] Zainicjalizowano {_cards.Count} kart postaci.");
 	}
 
+	public override void _ExitTree()
+	{
+		if (SunManager.Instance != null)
+		{
+			SunManager.Instance.SunChanged -= OnSunChanged;
+		}
+	}
+
 	// ── Obsługa kliknięcia karty ─────────────────────────────────────────
 
 	private void OnCardPressed(CharacterCard card)

@@ -184,25 +184,54 @@ public partial class GameManager : Node
 	private void WinGame()
 	{
 		State = GameState.Won;
+		GetTree().Paused = true;
+		EmitSignal(SignalName.GameOver, true);
 		GD.Print("[GameManager] Wygrałeś ten poziom!");
-
-		if (LevelsList != null && _currentLevelIndex + 1 < LevelsList.Count)
-		{
-			_currentLevelIndex++;
-			LoadLevel(_currentLevelIndex);
-			StartGame();
-		}
-		else
-		{
-			GD.Print("[GameManager] Gratulacje! Ukończyłeś całą grę!");
-		}
 	}
 
 	private void LoseGame()
 	{
 		State = GameState.Lost;
+		GetTree().Paused = true;
 		EmitSignal(SignalName.GameOver, false);
 		GD.Print("[GameManager] ✗ Przegrana.");
+	}
+
+	public bool HasNextLevel()
+	{
+		return LevelsList != null && _currentLevelIndex + 1 < LevelsList.Count;
+	}
+
+	public int CurrentLevelNumber => _currentLevelData != null ? _currentLevelData.LevelNumber : _currentLevelIndex + 1;
+
+	public void LoadNextLevel()
+	{
+		if (HasNextLevel())
+		{
+			GetTree().Paused = false;
+			if (GridManager.Instance != null)
+			{
+				GridManager.Instance.ResetGrid();
+			}
+			_waveTimer.Stop();
+			_currentLevelIndex++;
+			LoadLevel(_currentLevelIndex);
+			GetTree().ReloadCurrentScene();
+			Callable.From(StartGame).CallDeferred();
+		}
+	}
+
+	public void RestartLevel()
+	{
+		GetTree().Paused = false;
+		if (GridManager.Instance != null)
+		{
+			GridManager.Instance.ResetGrid();
+		}
+		_waveTimer.Stop();
+		LoadLevel(_currentLevelIndex);
+		GetTree().ReloadCurrentScene();
+		Callable.From(StartGame).CallDeferred();
 	}
 	
 	// ── Levele ───────────────────────────────────────────────────────
@@ -223,9 +252,9 @@ public partial class GameManager : Node
 		TotalWaves = _currentLevelData.TotalWaves; 
 		WaveInterval = _currentLevelData.WaveInterval;
 
-		if (SunManager.Instance != null)
+		if (SunManager.Instance != null && _currentLevelData != null)
 		{
-			// Opcjonalnie: SunManager.Instance.ResetSun(_currentLevelData.StartingSun);
+			SunManager.Instance.ResetSun(_currentLevelData.StartingSun);
 		}
 
 		GD.Print($"[GameManager] Załadowano Poziom {_currentLevelData.LevelNumber} z liczbą fal: {TotalWaves}!");

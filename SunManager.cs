@@ -29,6 +29,12 @@ public partial class SunManager : Node
 		Sun      = StartingSun;
 	}
 
+	public void ResetSun(int amount)
+	{
+		Sun = amount;
+		GD.Print($"[SunManager] Zresetowano słońce do: {amount}");
+	}
+
 	public void AddSun(int amount)
 	{
 		Sun += amount;
