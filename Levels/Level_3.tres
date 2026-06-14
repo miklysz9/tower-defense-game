@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cw3xnyan33guj"]
 
-[ext_resource type="Script" uid="uid://dpwfahtsod0v3" path="res://Scripts/LevelData.cs" id="1_o5bsh"]
 [ext_resource type="PackedScene" uid="uid://bw1akp5i7k8qx" path="res://Scene/enemies/zombie_base.tscn" id="1_numos"]
+[ext_resource type="Script" uid="uid://dpwfahtsod0v3" path="res://Scripts/LevelData.cs" id="1_o5bsh"]
 [ext_resource type="PackedScene" uid="uid://702773g3rqn5" path="res://Scene/enemies/muk.tscn" id="2_muk"]
 [ext_resource type="Script" uid="uid://cyo8rskugj0ut" path="res://Scripts/WaveData.cs" id="3_wavedata"]
 
@@ -29,6 +29,5 @@ metadata/_custom_type_script = "uid://cyo8rskugj0ut"
 script = ExtResource("1_o5bsh")
 LevelNumber = 3
 StartingSun = 250
-WaveInterval = 20.0
 Waves = Array[Object]([SubResource("Resource_wave1"), SubResource("Resource_wave2"), SubResource("Resource_wave3"), SubResource("Resource_wave4")])
 metadata/_custom_type_script = "uid://dpwfahtsod0v3"

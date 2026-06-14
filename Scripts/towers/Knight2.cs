@@ -20,7 +20,7 @@ public partial class Knight2 : PlantBase
 		_animatedSprite.Play("idle");
 		PlantName = "ObsidianKnight";
 		MaxHealth = 400;
-		Cost = 300; // Zbalansuj koszt (Fume-shroom w PvZ kosztuje 75, ale u Ciebie to potężny Rycerz)
+		Cost = 125; // Zbalansuj koszt (Fume-shroom w PvZ kosztuje 75, ale u Ciebie to potężny Rycerz)
 
 		_fumeEffect = GetNodeOrNull<Node2D>("FumeEffect");
 		if (_fumeEffect != null) _fumeEffect.Visible = false;
