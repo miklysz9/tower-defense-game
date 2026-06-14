@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bb6tfe465ju6l" path="res://Scene/UI/Sunflower.tscn" id="4_sunfl"]
 [ext_resource type="PackedScene" uid="uid://ckg5b8xi2ibff" path="res://Scene/UI/ObsidianKnight.tscn" id="5_obskn"]
 [ext_resource type="PackedScene" uid="uid://dapccioemupoq" path="res://Scene/UI/Cannon.tscn" id="6_0shvu"]
+
 [ext_resource type="Texture2D" uid="uid://4byw53h8kh0d" path="res://Assets/sun.png" id="7_bread"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bread"]
@@ -23,6 +24,8 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[ext_resource type="PackedScene" uid="uid://bdvwsje48u8xn" path="res://Scene/UI/shilded_knight_card.tscn" id="7_fjbua"]
 
 [node name="HUD" type="Control" unique_id=504301085]
 layout_mode = 3
@@ -103,3 +106,16 @@ layout_mode = 2
 
 [node name="CannonCard" parent="HBoxContainer" unique_id=87734872 instance=ExtResource("6_0shvu")]
 layout_mode = 2
+
+[node name="ShildedKnightCard" parent="HBoxContainer" unique_id=626799175 instance=ExtResource("7_fjbua")]
+layout_mode = 2
+
+[node name="SunLabel" type="Label" parent="." unique_id=730313530]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 95.0
+offset_right = 250.0
+offset_bottom = 125.0
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
