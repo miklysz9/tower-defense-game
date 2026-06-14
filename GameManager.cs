@@ -47,6 +47,7 @@ public partial class GameManager : Node
 
 		_waveTimer           = new Timer();
 		_waveTimer.WaitTime  = WaveInterval;
+		_waveTimer.OneShot   = true;
 		_waveTimer.Timeout  += StartNextWave;
 		AddChild(_waveTimer);
 
@@ -91,7 +92,9 @@ public partial class GameManager : Node
 		_currentWave++;
 		if (_currentWave > TotalWaves)
 		{
-			WinGame();
+			// Bezpieczeństwo: wygraj tylko jeśli nie ma żywych zombie
+			if (_aliveZombies <= 0)
+				WinGame();
 			return;
 		}
 
