@@ -5,7 +5,24 @@
 [ext_resource type="PackedScene" uid="uid://djyb1745p1pw3" path="res://Scene/UI/Knight.tscn" id="3_knight"]
 [ext_resource type="PackedScene" uid="uid://bb6tfe465ju6l" path="res://Scene/UI/Sunflower.tscn" id="4_sunfl"]
 [ext_resource type="PackedScene" uid="uid://ckg5b8xi2ibff" path="res://Scene/UI/ObsidianKnight.tscn" id="5_obskn"]
-[ext_resource type="PackedScene" path="res://Scene/UI/Cannon.tscn" id="6_0shvu"]
+[ext_resource type="PackedScene" uid="uid://dapccioemupoq" path="res://Scene/UI/Cannon.tscn" id="6_0shvu"]
+[ext_resource type="Texture2D" uid="uid://4byw53h8kh0d" path="res://Assets/sun.png" id="7_bread"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bread"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.35, 0.22, 0.1, 0.85)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.55, 0.35, 0.15, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="HUD" type="Control" unique_id=504301085]
 layout_mode = 3
@@ -18,18 +35,61 @@ mouse_filter = 1
 script = ExtResource("1_0apqc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1443579316]
-position = Vector2(444, 71)
+position = Vector2(530, 72)
 texture = ExtResource("2_e3kos")
+
+[node name="BreadDisplay" type="Control" parent="." unique_id=1727131986]
+anchors_preset = 0
+offset_left = 10.0
+offset_top = 14.0
+offset_right = 252.0
+offset_bottom = 115.0
+
+[node name="BreadFrame" type="Panel" parent="BreadDisplay" unique_id=1344908412]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bread")
+
+[node name="HBox" type="HBoxContainer" parent="BreadDisplay" unique_id=227856099]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="BreadIcon" type="TextureRect" parent="BreadDisplay/HBox" unique_id=48360617]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("7_bread")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="SunLabel" type="Label" parent="BreadDisplay/HBox" unique_id=730313530]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.6)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 14
+text = "0"
+vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1455779854]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.192
-offset_left = 182.0
-offset_top = 4.0
-offset_right = -574.0
-offset_bottom = -0.2400055
+offset_left = 268.0
+offset_top = 5.0
+offset_right = -488.0
+offset_bottom = 0.7599945
 theme_override_constants/separation = 10
 alignment = 1
 
@@ -43,13 +103,3 @@ layout_mode = 2
 
 [node name="CannonCard" parent="HBoxContainer" unique_id=87734872 instance=ExtResource("6_0shvu")]
 layout_mode = 2
-
-[node name="SunLabel" type="Label" parent="." unique_id=730313530]
-layout_mode = 0
-offset_left = 180.0
-offset_top = 95.0
-offset_right = 250.0
-offset_bottom = 125.0
-theme_override_font_sizes/font_size = 14
-horizontal_alignment = 1
-vertical_alignment = 1

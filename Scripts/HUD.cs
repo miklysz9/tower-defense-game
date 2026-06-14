@@ -20,7 +20,7 @@ public partial class HUD : Control
 	public override void _Ready()
 	{
 		// 1. Pobranie referencji do węzłów
-		_sunLabel      = GetNode<Label>("SunLabel");
+		_sunLabel      = GetNode<Label>("BreadDisplay/HBox/SunLabel");
 		_cardContainer = GetNode<HBoxContainer>("HBoxContainer");
 
 		// 2. Zbieramy wszystkie karty z kontenera
@@ -101,7 +101,7 @@ public partial class HUD : Control
 	{
 		if (_sunLabel != null)
 		{
-			_sunLabel.Text = $"Słońce: {newAmount}";
+			_sunLabel.Text = $"Bread: {newAmount}";
 		}
 
 		UpdateCardAffordability();
