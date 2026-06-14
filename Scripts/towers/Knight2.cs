@@ -6,6 +6,7 @@ public partial class Knight2 : PlantBase
 	[Export] public float ShootInterval = 1.2f; // Fume-shroom strzela odrobinę szybciej niż groszek
 	[Export] public int Damage = 20;            // Obrażenia na jedno "smagnięcie" gazem
 
+	private AnimatedSprite2D _animatedSprite;
 	private Timer _shootTimer;
 	private bool _zombieInRow = false;
 	private Area2D _detectionArea;
@@ -15,6 +16,8 @@ public partial class Knight2 : PlantBase
 
 	protected override void OnReady()
 	{
+		_animatedSprite = GetNode<AnimatedSprite2D>("Sprite2D");
+		_animatedSprite.Play("idle");
 		PlantName = "ObsidianKnight";
 		MaxHealth = 400;
 		Cost = 300; // Zbalansuj koszt (Fume-shroom w PvZ kosztuje 75, ale u Ciebie to potężny Rycerz)
@@ -40,6 +43,7 @@ public partial class Knight2 : PlantBase
 	{
 		if (body is ZombieBase)
 		{
+			_animatedSprite.Play("attack");
 			_zombieInRow = true;
 			if (_shootTimer.IsStopped())
 				_shootTimer.Start();
@@ -49,6 +53,10 @@ public partial class Knight2 : PlantBase
 	private void OnZombieExited(Node2D body)
 	{
 		CheckIfZombieStillInRow();
+		if (!_zombieInRow){
+			_animatedSprite.Play("idle");
+			return; 
+		}  
 	}
 
 	private void CheckIfZombieStillInRow()
